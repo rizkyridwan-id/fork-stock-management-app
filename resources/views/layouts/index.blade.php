@@ -7,11 +7,11 @@
     <title>Toko Jaya Abadi | @yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-	<meta name="base_url" content="{{url('')}}">
+    <meta name="base_url" content="{{ url('') }}">
     <script src="{{ asset('js/app.js') }}"></script>
 
 </head>
-<?php $thisPage = $_SERVER["REQUEST_URI"];  ?>
+<?php $thisPage = $_SERVER['REQUEST_URI']; ?>
 
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -45,9 +45,55 @@
                                 </p>
                             </a>
                         </li>
-                      
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Data Master
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview"
+                                style="display: <?= $thisPage === '/master-user' || $thisPage === '/master-supplier' || $thisPage === '/master-barang' || $thisPage === '/master-kategori' || $thisPage === '/master-jenis' ? 'block;' : 'none;' ?>">
+                                <li class="nav-item">
+                                    <a href="{{ route('master-barang.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Master Barang</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('master-supplier.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Master Supplier</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('master-user.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Master User</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('penerimaan-barang.index') }}" class="nav-link">
+                                <i class="nav-icon  fas fa-box-archive"></i>
+                                <p>
+                                    Penerimaan Barang
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pengeluaran-barang.index') }}" class="nav-link">
+                                <i class="nav-icon  fas fa-solid fa-box-open"></i>
+                                <p>
+                                    Pengeluaran Barang
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">
                                 <i class="nav-icon fas fa-sign-out-alt"></i>
                                 <p>
                                     Keluar
@@ -89,6 +135,7 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
-   
+
 </body>
+
 </html>

@@ -16,8 +16,7 @@
         <div class="card card-outline card-primary">
             <div class="card-body">
                 <p class="login-box-msg">Silahkan Login</p>
-
-                <form action="../../index3.html" method="post">
+                <form action="{{ route('dashboard') }}" method="GET">
                     <div class="input-group mb-3">
                         <input type="email" class="form-control" placeholder="Email">
                         <div class="input-group-append">
@@ -40,7 +39,6 @@
                         </div>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

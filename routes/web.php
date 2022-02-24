@@ -8,6 +8,7 @@ use App\Http\Controllers\DataSupplierController;
 use App\Http\Controllers\DataUserController;
 use App\Http\Controllers\PenerimaanBarangController;
 use App\Http\Controllers\PengeluaranBarangController;
+use App\Http\Controllers\DivisiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::resource('master-barang', DataBarangController::class);
 Route::resource('master-supplier', DataSupplierController::class);
 Route::resource('master-user', DataUserController::class);
+Route::resource('master-divisi', DivisiController::class);
 Route::resource('penerimaan-barang', PenerimaanBarangController::class);
 Route::resource('pengeluaran-barang', PengeluaranBarangController::class);
+
+Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');
+Route::get('/laporan-pengeluaran-barang', [PengeluaranBarangController::class, 'laporan'])->name('laporan-pengeluaran');

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->text('kode_supplier');
             $table->text('kode_barang');
-            $table->text('kode_barcode');
             $table->text('nama_barang');
             $table->longText('keterangan_barang');
             $table->integer('stock');

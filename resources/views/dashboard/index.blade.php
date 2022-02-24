@@ -1,5 +1,6 @@
 @extends('layouts.index')
 @section('content')
+@section('title','Dashboard')
 
     <div class="row">
         <div class="col-lg-3 col-6">

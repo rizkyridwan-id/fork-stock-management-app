@@ -82,4 +82,10 @@ class PenerimaanBarangController extends Controller
     {
         //
     }
+
+    public function laporan()
+    {
+        return view('laporan.LaporanPenerimaanBarang');
+        
+    }
 }

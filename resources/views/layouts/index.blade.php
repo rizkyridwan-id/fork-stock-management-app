@@ -38,7 +38,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -48,14 +48,14 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-copy"></i>
+                                <i class="nav-icon fas fa-solid fa-database"></i>
                                 <p>
                                     Data Master
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview"
-                                style="display: <?= $thisPage === '/master-user' || $thisPage === '/master-supplier' || $thisPage === '/master-barang' || $thisPage === '/master-kategori' || $thisPage === '/master-jenis' ? 'block;' : 'none;' ?>">
+                                style="display: <?= $thisPage === '/master-user' || $thisPage === '/master-divisi' ||  $thisPage === '/master-supplier' || $thisPage === '/master-barang' || $thisPage === '/master-kategori' || $thisPage === '/master-jenis' ? 'block;' : 'none;' ?>">
                                 <li class="nav-item">
                                     <a href="{{ route('master-barang.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -72,6 +72,12 @@
                                     <a href="{{ route('master-user.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Master User</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('master-divisi.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Master Divisi</p>
                                     </a>
                                 </li>
                             </ul>
@@ -91,6 +97,31 @@
                                     Pengeluaran Barang
                                 </p>
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Laporan
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview"
+                                style="display: <?= $thisPage === '/laporan-penerimaan-barang' || $thisPage === '/laporan-pengeluaran-barang' ? 'block;' : 'none;' ?>">
+                                <li class="nav-item">
+                                    <a href="{{ route('laporan-penerimaan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan Penerimaan</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('laporan-pengeluaran') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan Pengeluaran</p>
+                                    </a>
+                                </li>
+                               
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="{{ url('/') }}" class="nav-link">

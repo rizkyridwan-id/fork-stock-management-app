@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Data Barang</h1>
+                <h1>Data Users</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -15,7 +15,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-6">
-                    <h3 class="card-title">List Data Barang</h3>
+                    <h3 class="card-title">List Data Users</h3>
                 </div>
                 <div class="col-6 text-right">
                     <a onclick="ShowDataMasterUsers()" href="javascript:;"
@@ -42,5 +42,9 @@
         <!-- /.card-body -->
     </div>
 </section>
-
+<script>
+    $(document).ready(function() {
+        getDataUsers()
+    })
+</script>
 @stop

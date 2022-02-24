@@ -55,7 +55,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview"
-                                style="display: <?= $thisPage === '/master-user' || $thisPage === '/master-divisi' ||  $thisPage === '/master-supplier' || $thisPage === '/master-barang' || $thisPage === '/master-kategori' || $thisPage === '/master-jenis' ? 'block;' : 'none;' ?>">
+                                style="display: <?= $thisPage === '/master-users' || $thisPage === '/master-divisi' ||  $thisPage === '/master-supplier' || $thisPage === '/master-barang' || $thisPage === '/master-kategori' || $thisPage === '/master-jenis' ? 'block;' : 'none;' ?>">
                                 <li class="nav-item">
                                     <a href="{{ route('master-barang.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -69,7 +69,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('master-user.index') }}" class="nav-link">
+                                    <a href="{{ route('master-users.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Master User</p>
                                     </a>

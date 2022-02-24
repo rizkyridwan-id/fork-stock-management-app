@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
+use App\Models\User;
+
 
 class DataUserController extends Controller
 {
@@ -80,5 +83,24 @@ class DataUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dataTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $datas = User::all();
+            return DataTables::of($datas)
+                ->addIndexColumn() //memberikan penomoran
+                ->addColumn('action', function($row){  
+                    $enc_id = \Crypt::encrypt($row->id);
+                    $hidden = $row->username === "superadmin" ? "display:none" : "display:block";
+                    $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditUsers('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
+                            <a onclick="hapusDtaUsers('.$row->id.')" class="hapus btn btn-sm btn-danger" style='.$hidden.'> <i class="fas fa-trash"></i> Hapus</a>';
+                    return $btn; 
+                })
+                ->rawColumns(['action'])   //merender content column dalam bentuk html
+                ->escapeColumns()  //mencegah XSS Attack
+                ->toJson(); //merubah response dalam bentuk Json
+        } 
     }
 }

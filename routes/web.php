@@ -31,7 +31,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('master-barang', DataBarangController::class);
     Route::resource('master-supplier', DataSupplierController::class);
-    Route::resource('master-user', DataUserController::class);
+    
+    Route::resource('master-users', DataUserController::class);
+    Route::get('get-data-users',[DataUserController::class,'dataTable'])->name('master-users.getDataAll');
+
     Route::resource('master-divisi', DivisiController::class);
     Route::resource('penerimaan-barang', PenerimaanBarangController::class);
     Route::resource('pengeluaran-barang', PengeluaranBarangController::class);

@@ -6,7 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Str;
-
+use Faker\Factory as Faker;
 
 class UsersSeeder extends Seeder
 {
@@ -17,12 +17,14 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
-            'username' => 'superadmin',
-            'nama_lengkap' => "Super Admin",
-            'password' => bcrypt('123456'),
-            'remember_token' => Str::random(10),
-        ]);
-
+        $faker = Faker::create('id_ID');
+        for($i = 1; $i <= 10; $i++){
+            $user = User::create([
+                'username' => $faker->username,
+                'nama_lengkap' => $faker->name,
+                'password' => bcrypt('123456'),
+                'remember_token' => Str::random(10),
+            ]);
+        };
     }
 }

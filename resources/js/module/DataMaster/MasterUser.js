@@ -35,9 +35,6 @@ window.getDataUsers = function () {
                 data: "username",
             },
             {
-                data: "email",
-            },
-            {
                 data: "nama_lengkap",
             },
             {
@@ -62,8 +59,6 @@ window.ShowDataMasterUsers = function (){
     $("#MasterUsersModal").modal("show");
     $("#note-password").hide();
     $("#password_old").val("");
-
-
 }
 
 window.simpanDatauser = function (e) {

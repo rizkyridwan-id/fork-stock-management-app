@@ -1,1 +1,2 @@
 require("./MasterUser")
+require("./MasterDivisi")

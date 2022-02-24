@@ -50,15 +50,11 @@ window.getDataUsers = function () {
 window.ShowDataMasterUsers = function (){
     $("#username").removeAttr('readonly');
     $("#password").val("")
-    $("#is_edit").val(false);
     $("#username").val("");
-    $("#email").val("");
-    $("#nama_jenis").val("");
-    $("#no_hp").val("");
     $("#nama_lengkap").val("");
+    $("#is_edit").val(false);
     $("#MasterUsersModal").modal("show");
-    $("#note-password").hide();
-    $("#password_old").val("");
+    $("#passwordhidden").show();
 }
 
 window.simpanDatauser = function (e) {
@@ -158,14 +154,10 @@ window.showModalEditUsers = function (e){
             if (respons.status == "berhasil") {
                 respons.data.forEach((el) => {
                     $("#username").attr('readonly', 'readonly');
-                    $("#note-password").show();
+                    $("#passwordhidden").hide();
                     $("#is_edit").val(true);
                     $("#username").val(el.username);
-                    $("#email").val(el.email);
-                    $("#nama_jenis").val(el.nama_jenis);
-                    $("#no_hp").val(el.no_hp);
                     $("#nama_lengkap").val(el.nama_lengkap);
-                    $("#password_old").val(el.password);
                 });
                 $("#MasterUsersModal").modal("show");
             } else {

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\ModelDivisi;
+use DataTables;
 class DivisiController extends Controller
 {
     /**
@@ -34,7 +35,37 @@ class DivisiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'kode_divisi' => 'required',
+            'nama_divisi' => 'required',
+         ]);
+        $cek = ModelDivisi::where('kode_divisi', '=', $request->get('kode_divisi'))->get();
+        if(count($cek) == 1){
+            $response = array(
+                'status' => 'error',
+                'pesan' =>"Kode ".$request->get('kode_divisi') .'  Tersebut Sudah Ada'
+            );
+            return response()->json($response, 500);
+        }else{
+            $simpan = ModelDivisi::create([
+                'kode_divisi' => $request->get('kode_divisi'),
+                'nama_divisi' => $request->get('nama_divisi'),
+            ]);
+            if($simpan){
+                $response = array(
+                    'status' => 'berhasil',
+                    'data' => $cek
+                );
+                return response()->json($response, 200);
+
+            }else{
+                $response = array(
+                    'status' => 'gagal',
+                    'data' => $simpan
+                );
+            return response()->json($response, 404);
+            }
+        }
     }
 
     /**
@@ -45,7 +76,21 @@ class DivisiController extends Controller
      */
     public function show($id)
     {
-        //
+        $cek = ModelDivisi::where('id', '=', $id)->get();
+        if($cek){
+            $response = array(
+                'status' => 'berhasil',
+                'data' => $cek
+            );
+            return response()->json($response, 200);
+
+        }else{
+            $response = array(
+                'status' => 'gagal',
+                'pesan' => "Gagal Mengambil Data"
+            );
+        return response()->json($response, 404);
+        }
     }
 
     /**
@@ -68,7 +113,24 @@ class DivisiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cek = ModelDivisi::where('kode_divisi', $request->get('kode_divisi'))
+        ->update([
+            'nama_divisi' => $request->get('nama_divisi'),
+         ]);
+         if($cek){
+             $response = array(
+                 'status' => 'berhasil',
+                 'data' => $cek
+             );
+             return response()->json($response, 200);
+ 
+         }else{
+             $response = array(
+                 'status' => 'gagal',
+                 'pesan' => "Gagal Mengambil Data"
+             );
+         return response()->json($response, 404);
+         }
     }
 
     /**
@@ -79,6 +141,37 @@ class DivisiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hasil = ModelDivisi::where('id', $id)->delete();
+        if($hasil){
+             $response = array(
+                 'status' => 'berhasil',
+                 'pesan' =>'Data Berhasil Di hapus'
+             );
+             return response()->json($response, 200);
+         }else{
+             $response = array(
+                 'status' => 'error',
+                 'pesan' =>'Data Gagal Di hapus'
+             );
+             return response()->json($response, 200);
+         }
+    }
+
+    public function dataTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $datas = ModelDivisi::all();
+            return DataTables::of($datas)
+                ->addIndexColumn() //memberikan penomoran
+                ->addColumn('action', function($row){  
+                    $enc_id = \Crypt::encrypt($row->id);
+                    $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditDivisi('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
+                            <a onclick="hapusDataDivisi('.$row->id.')" class="hapus btn btn-sm btn-danger"> <i class="fas fa-trash"></i> Hapus</a>';
+                    return $btn; 
+                })
+                ->rawColumns(['action'])   //merender content column dalam bentuk html
+                ->escapeColumns()  //mencegah XSS Attack
+                ->toJson(); //merubah response dalam bentuk Json
+        } 
     }
 }

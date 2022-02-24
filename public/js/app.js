@@ -7485,6 +7485,185 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
+/***/ "./resources/js/module/DataMaster/MasterDivisi.js":
+/*!********************************************************!*\
+  !*** ./resources/js/module/DataMaster/MasterDivisi.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _base_url_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../base_url.js */ "./resources/js/module/base_url.js");
+
+
+window.ShowModalDivisi = function () {
+  $("#kode_divisi").removeAttr("readonly");
+  $("#kode_divsi").val("");
+  $("#nama_divisi").val("");
+  $("#is_edit").val(false);
+  $("#MasterDivisisModal").modal("show");
+};
+
+window.simpanDivisi = function (e) {
+  e.preventDefault();
+  var form_data = $("#form_tambah_divisi").serializeArray();
+  var databaru = serializeObject(form_data);
+
+  if ((databaru === null || databaru === void 0 ? void 0 : databaru.is_edit) === "true") {
+    $.ajax({
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/master-divisi/" + databaru.kode_divisi,
+      type: "PUT",
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      data: form_data,
+      success: function success(respons) {
+        if (respons.status == "berhasil") {
+          $("#MasterDivisisModal").modal("hide");
+          ToastNotification("success", "Data Berhasil Diedit");
+          getDataDivisi();
+          $("#form_tambah_divisi")[0].reset();
+        } else {
+          ToastNotification("info", respons.pesan);
+          return false;
+        }
+      },
+      error: function error(respons, textStatus, errorThrown) {
+        ToastNotification("info", respons.responseJSON.pesan);
+      }
+    });
+  } else {
+    $.ajax({
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/master-divisi",
+      type: "POST",
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      data: form_data,
+      success: function success(respons) {
+        if (respons.status == "berhasil") {
+          $("#MasterDivisisModal").modal("hide");
+          ToastNotification("success", "Data Berhasil Disimpan");
+          getDataDivisi();
+          $("#form_tambah_divisi")[0].reset();
+        } else {
+          ToastNotification("info", respons.pesan);
+          return false;
+        }
+      },
+      error: function error(respons, textStatus, errorThrown) {
+        var _respons$responseJSON;
+
+        console.log(respons);
+        ToastNotification("info", ((_respons$responseJSON = respons.responseJSON) === null || _respons$responseJSON === void 0 ? void 0 : _respons$responseJSON.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
+      }
+    });
+  }
+};
+
+window.getDataDivisi = function () {
+  $("#tbl_divisi").DataTable({
+    pageLength: 10,
+    lengthChange: true,
+    bFilter: true,
+    destroy: true,
+    processing: true,
+    serverSide: true,
+    oLanguage: {
+      sZeroRecords: "Tidak Ada Data",
+      sSearch: "Pencarian _INPUT_",
+      sLengthMenu: "_MENU_",
+      sInfo: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+      sInfoEmpty: "",
+      oPaginate: {
+        sNext: "<i class='fa fa-angle-right'></i>",
+        sPrevious: "<i class='fa fa-angle-left'></i>"
+      }
+    },
+    ajax: {
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/get-data-divisi",
+      type: "GET"
+    },
+    columns: [{
+      data: "DT_RowIndex",
+      name: "DT_Row_Index",
+      className: "text-center",
+      orderable: false,
+      searchable: false
+    }, {
+      data: "kode_divisi"
+    }, {
+      data: "nama_divisi"
+    }, {
+      data: "action",
+      orderable: false,
+      className: "text-center",
+      searchable: false
+    }]
+  });
+};
+
+window.showModalEditDivisi = function (e) {
+  $.ajax({
+    url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/master-divisi/" + e,
+    type: "GET",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    success: function success(respons) {
+      if (respons.status == "berhasil") {
+        respons.data.forEach(function (el) {
+          $("#kode_divisi").attr('readonly', 'readonly');
+          $("#is_edit").val(true);
+          $("#kode_divisi").val(el.kode_divisi);
+          $("#nama_divisi").val(el.nama_divisi);
+        });
+        $("#MasterDivisisModal").modal("show");
+      } else {
+        ToastNotification("error", respons.pesan);
+        return false;
+      }
+    },
+    error: function error(respons, textStatus, errorThrown) {
+      ToastNotification("error", respons.responseJSON.pesan);
+    }
+  });
+};
+
+window.hapusDataDivisi = function (e) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Apakah Anda Ingin Mneghapus Data Ini ?',
+    showCancelButton: true,
+    confirmButtonText: 'Hapus'
+  }).then(function (result) {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      $.ajax({
+        url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/master-divisi/" + e,
+        type: "DELETE",
+        headers: {
+          "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function success(respons) {
+          if (respons.status == "berhasil") {
+            ToastNotification("success", "Data Berhasil Di Hapus");
+            getDataDivisi();
+          } else {
+            ToastNotification("error", respons.pesan);
+            return false;
+          }
+        },
+        error: function error(respons, textStatus, errorThrown) {
+          ToastNotification("error", respons.responseJSON.pesan);
+        }
+      });
+    }
+  });
+};
+
+/***/ }),
+
 /***/ "./resources/js/module/DataMaster/MasterUser.js":
 /*!******************************************************!*\
   !*** ./resources/js/module/DataMaster/MasterUser.js ***!
@@ -7541,15 +7720,11 @@ window.getDataUsers = function () {
 window.ShowDataMasterUsers = function () {
   $("#username").removeAttr('readonly');
   $("#password").val("");
-  $("#is_edit").val(false);
   $("#username").val("");
-  $("#email").val("");
-  $("#nama_jenis").val("");
-  $("#no_hp").val("");
   $("#nama_lengkap").val("");
+  $("#is_edit").val(false);
   $("#MasterUsersModal").modal("show");
-  $("#note-password").hide();
-  $("#password_old").val("");
+  $("#passwordhidden").show();
 };
 
 window.simpanDatauser = function (e) {
@@ -7650,14 +7825,10 @@ window.showModalEditUsers = function (e) {
       if (respons.status == "berhasil") {
         respons.data.forEach(function (el) {
           $("#username").attr('readonly', 'readonly');
-          $("#note-password").show();
+          $("#passwordhidden").hide();
           $("#is_edit").val(true);
           $("#username").val(el.username);
-          $("#email").val(el.email);
-          $("#nama_jenis").val(el.nama_jenis);
-          $("#no_hp").val(el.no_hp);
           $("#nama_lengkap").val(el.nama_lengkap);
-          $("#password_old").val(el.password);
         });
         $("#MasterUsersModal").modal("show");
       } else {
@@ -7680,6 +7851,8 @@ window.showModalEditUsers = function (e) {
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 __webpack_require__(/*! ./MasterUser */ "./resources/js/module/DataMaster/MasterUser.js");
+
+__webpack_require__(/*! ./MasterDivisi */ "./resources/js/module/DataMaster/MasterDivisi.js");
 
 /***/ }),
 

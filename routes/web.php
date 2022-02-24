@@ -34,8 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('master-users', DataUserController::class);
     Route::get('get-data-users',[DataUserController::class,'dataTable'])->name('master-users.getDataAll');
-
+    
     Route::resource('master-divisi', DivisiController::class);
+    Route::get('get-data-divisi',[DivisiController::class,'dataTable'])->name('master-divisi.getDataAll');
+   
     Route::resource('penerimaan-barang', PenerimaanBarangController::class);
     Route::resource('pengeluaran-barang', PengeluaranBarangController::class);
     Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');

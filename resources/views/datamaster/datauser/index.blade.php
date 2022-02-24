@@ -42,6 +42,8 @@
         <!-- /.card-body -->
     </div>
 </section>
+@include('datamaster/datauser/create')
+
 <script>
     $(document).ready(function() {
         getDataUsers()

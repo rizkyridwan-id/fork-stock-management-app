@@ -37,7 +37,39 @@ class DataUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'username' => 'required',
+            'nama_lengkap' => 'required',
+            'password' => 'required',
+         ]);
+        $cek = User::where('username', '=', $request->get('username'))->get();
+        if(count($cek) == 1){
+            $response = array(
+                'status' => 'error',
+                'pesan' =>"Kode ".$request->get('username') .'  Tersebut Sudah Ada'
+            );
+            return response()->json($response, 500);
+        }else{
+            $simpan = User::create([
+                'username' => $request->get('username'),
+                'nama_lengkap' => $request->get('nama_lengkap'),
+                'password' => bcrypt($request->get('password'))
+            ]);
+            if($simpan){
+                $response = array(
+                    'status' => 'berhasil',
+                    'data' => $cek
+                );
+                return response()->json($response, 200);
+
+            }else{
+                $response = array(
+                    'status' => 'gagal',
+                    'data' => $simpan
+                );
+            return response()->json($response, 404);
+            }
+        }
     }
 
     /**
@@ -48,7 +80,21 @@ class DataUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $cek = User::where('id', '=', $id)->get();
+        if($cek){
+            $response = array(
+                'status' => 'berhasil',
+                'data' => $cek
+            );
+            return response()->json($response, 200);
+
+        }else{
+            $response = array(
+                'status' => 'gagal',
+                'pesan' => "Gagal Mengambil Data"
+            );
+        return response()->json($response, 404);
+        }
     }
 
     /**
@@ -71,7 +117,25 @@ class DataUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cek = User::where('username', $request->get('username'))
+        ->update([
+            'nama_lengkap' => $request->get('nama_lengkap'),
+            // 'password' => bcrypt($request->get('password'))
+         ]);
+         if($cek){
+             $response = array(
+                 'status' => 'berhasil',
+                 'data' => $cek
+             );
+             return response()->json($response, 200);
+ 
+         }else{
+             $response = array(
+                 'status' => 'gagal',
+                 'pesan' => "Gagal Mengambil Data"
+             );
+         return response()->json($response, 404);
+         }
     }
 
     /**
@@ -82,7 +146,20 @@ class DataUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hasil = User::where('id', $id)->delete();
+        if($hasil){
+             $response = array(
+                 'status' => 'berhasil',
+                 'pesan' =>'Data Berhasil Di hapus'
+             );
+             return response()->json($response, 200);
+         }else{
+             $response = array(
+                 'status' => 'error',
+                 'pesan' =>'Data Gagal Di hapus'
+             );
+             return response()->json($response, 200);
+         }
     }
 
     public function dataTable(Request $request)
@@ -93,7 +170,7 @@ class DataUserController extends Controller
                 ->addIndexColumn() //memberikan penomoran
                 ->addColumn('action', function($row){  
                     $enc_id = \Crypt::encrypt($row->id);
-                    $hidden = $row->username === "superadmin" ? "display:none" : "display:block";
+                    $hidden = $row->username === "superadmin" ? "display:none" : "";
                     $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditUsers('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
                             <a onclick="hapusDtaUsers('.$row->id.')" class="hapus btn btn-sm btn-danger" style='.$hidden.'> <i class="fas fa-trash"></i> Hapus</a>';
                     return $btn; 

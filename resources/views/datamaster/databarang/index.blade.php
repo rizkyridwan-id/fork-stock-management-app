@@ -18,14 +18,14 @@
                     <h3 class="card-title">List Data Barang</h3>
                 </div>
                 <div class="col-6 text-right">
-                    <a onclick="ShowDataMasterUsers()" href="javascript:;"
+                    <a onclick="showModalDataBarang()" href="javascript:;"
                         class="btn btn-sm btn-icon btn-circle btn-primary"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="tbl_users" class="table table-bordered table-striped">
+            <table id="tbl_barang" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -45,5 +45,11 @@
         <!-- /.card-body -->
     </div>
 </section>
+@include('datamaster/databarang/create')
 
+<script>
+    $(document).ready(function() {
+        getDataBarang()
+    })
+</script>
 @stop

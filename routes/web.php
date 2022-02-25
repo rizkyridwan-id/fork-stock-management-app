@@ -30,7 +30,11 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('master-barang', DataBarangController::class);
+    Route::get('get-data-barang',[DataBarangController::class,'dataTable'])->name('master-barang.getDataAll');
+    Route::post('get-datasupplierAjax',[DataBarangController::class,'datasupplierAjax'])->name('master-barang.datasupplierAjax');
+  
     Route::resource('master-supplier', DataSupplierController::class);
+    Route::get('get-data-supplier',[DataSupplierController::class,'dataTable'])->name('master-supplier.getDataAll');
     
     Route::resource('master-users', DataUserController::class);
     Route::get('get-data-users',[DataUserController::class,'dataTable'])->name('master-users.getDataAll');

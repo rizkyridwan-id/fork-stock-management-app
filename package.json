@@ -18,7 +18,8 @@
     "postcss": "^8.1.14",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.49.8",
-    "sass-loader": "^12.6.0"
+    "sass-loader": "^12.6.0",
+    "select2": "^4.1.0-rc.0"
   },
   "name": "managementstock",
   "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\"></a></p>",
@@ -36,6 +37,7 @@
     "jquery": "^3.6.0",
     "jquery-ui": "^1.13.1",
     "popper.js": "^1.16.1",
+    "select2-bootstrap4-theme": "^1.0.0",
     "sweetalert2": "^11.4.4"
   }
 }

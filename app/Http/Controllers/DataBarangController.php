@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\ModelBarang;
+use App\Models\ModelSupplier;
+use DataTables;
 class DataBarangController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class DataBarangController extends Controller
      */
     public function index()
     {
-        return view('datamaster.databarang.index');
+        $datasupplier = ModelSupplier::take(5)->get();
+        return view('datamaster.databarang.index',compact('datasupplier'));
         
     }
 
@@ -35,7 +38,47 @@ class DataBarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cek = ModelBarang::where('kode_barang', '=', $request->get('kode_barang'))->get();
+        if(count($cek) == 1){
+            $response = array(
+                'status' => 'error',
+                'pesan' =>"Kode ".$request->get('kode_barang') .'  Tersebut Sudah Ada'
+            );
+            return response()->json($response, 500);
+        }else{
+            $cekData = ModelBarang::latest()->take(1)->get();
+         
+            if(count($cekData) == 0){
+                $kode_barang = "BRG001";
+            }else{
+                $urutan = (int) substr($cekData[0]->kode_barang, 3, 3);
+                $urutan++;
+                $kode_barang = 'BRG'. sprintf("%03s", $urutan);
+            }
+
+            $simpan = ModelBarang::create([
+                'kode_supplier' => $request->get('kode_supplier'),
+                'kode_barang' => $kode_barang,
+                'nama_barang' => $request->get('nama_barang'),
+                'stock' => $request->get('stock'),
+                'keterangan_barang' => $request->get('keterangan_barang'),
+            ]);
+
+            if($simpan){
+                $response = array(
+                    'status' => 'berhasil',
+                    'data' => $cek
+                );
+                return response()->json($response, 200);
+
+            }else{
+                $response = array(
+                    'status' => 'gagal',
+                    'data' => $simpan
+                );
+            return response()->json($response, 404);
+            }
+        }
     }
 
     /**
@@ -46,7 +89,21 @@ class DataBarangController extends Controller
      */
     public function show($id)
     {
-        //
+        $cek = ModelBarang::where('id', '=', $id)->get();
+        if($cek){
+            $response = array(
+                'status' => 'berhasil',
+                'data' => $cek
+            );
+            return response()->json($response, 200);
+
+        }else{
+            $response = array(
+                'status' => 'gagal',
+                'pesan' => "Gagal Mengambil Data"
+            );
+        return response()->json($response, 404);
+        }
     }
 
     /**
@@ -69,7 +126,27 @@ class DataBarangController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cek = ModelBarang::where('kode_barang', $request->get('kode_barang'))
+        ->update([
+            'nama_barang' => $request->get('nama_barang'),
+            'kode_supplier' => $request->get('kode_supplier'),
+            'stock' => $request->get('stock'),
+            'keterangan_barang' => $request->get('keterangan_barang'),
+         ]);
+         if($cek){
+             $response = array(
+                 'status' => 'berhasil',
+                 'data' => $cek
+             );
+             return response()->json($response, 200);
+ 
+         }else{
+             $response = array(
+                 'status' => 'gagal',
+                 'pesan' => "Gagal Mengambil Data"
+             );
+         return response()->json($response, 404);
+         }
     }
 
     /**
@@ -80,6 +157,59 @@ class DataBarangController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $hasil = ModelBarang::where('id', $id)->delete();
+        if($hasil){
+             $response = array(
+                 'status' => 'berhasil',
+                 'pesan' =>'Data Berhasil Di hapus'
+             );
+             return response()->json($response, 200);
+         }else{
+             $response = array(
+                 'status' => 'error',
+                 'pesan' =>'Data Gagal Di hapus'
+             );
+             return response()->json($response, 200);
+         }
+    }
+
+    public function dataTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $datas = ModelBarang::all();
+            return DataTables::of($datas)
+                ->addIndexColumn() //memberikan penomoran
+                ->addColumn('action', function($row){  
+                    $enc_id = \Crypt::encrypt($row->id);
+                    $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditDataBarang('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
+                            <a onclick="hapusDataBarang('.$row->id.')" class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
+                    return $btn; 
+                })
+                ->rawColumns(['action'])   //merender content column dalam bentuk html
+                ->escapeColumns()  //mencegah XSS Attack
+                ->toJson(); //merubah response dalam bentuk Json
+        } 
+    }
+
+    public function datasupplierAjax(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == ''){
+           $supplier = ModelSupplier::orderby('nama_supplier','asc')->select('kode_supplier','nama_supplier')->limit(5)->get();
+        }else{
+           $supplier = ModelSupplier::orderby('nama_supplier','asc')->select('kode_supplier','nama_supplier')->where('nama_supplier', 'like', '%' .$search . '%')->limit(5)->get();
+        }
+  
+        $response = array();
+        foreach($supplier as $row){
+           $response[] = array(
+                "id"=>$row->kode_supplier,
+                "text"=>$row->nama_supplier
+           );
+        }
+  
+        return response()->json($response);
+    	
     }
 }

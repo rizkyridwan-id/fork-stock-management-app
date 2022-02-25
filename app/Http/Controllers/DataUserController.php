@@ -46,7 +46,7 @@ class DataUserController extends Controller
         if(count($cek) == 1){
             $response = array(
                 'status' => 'error',
-                'pesan' =>"Kode ".$request->get('username') .'  Tersebut Sudah Ada'
+                'pesan' =>"Username ".$request->get('username') .' Sudah Terdaftar'
             );
             return response()->json($response, 500);
         }else{

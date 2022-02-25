@@ -153,4 +153,23 @@ class PenerimaanBarangController extends Controller
         $pdf = PDF::loadview('laporan.cetakLaporanPenerimaanbarang', $data)->setPaper('a4', 'portrait');
         return $pdf->stream();
     }
+
+    public function dataTable(Request $request)
+    {
+        if ($request->ajax()) {
+            $datas = ModelPenerimaanBarangController::all();
+            return DataTables::of($datas)
+                ->addIndexColumn() //memberikan penomoran
+                ->addColumn('action', function($row){  
+                    $enc_id = \Crypt::encrypt($row->id);
+                    $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditDataBarang('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
+                            <a onclick="hapusDataBarang('.$row->id.')" class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
+                    return $btn; 
+                })
+                ->rawColumns(['action'])   //merender content column dalam bentuk html
+                ->escapeColumns()  //mencegah XSS Attack
+                ->toJson(); //merubah response dalam bentuk Json
+        } 
+    }
+
 }

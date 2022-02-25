@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ModelBarang;
 use App\Models\ModelSupplier;
 use DataTables;
+use DB;
 class DataBarangController extends Controller
 {
     /**
@@ -47,7 +48,7 @@ class DataBarangController extends Controller
             return response()->json($response, 500);
         }else{
             $cekData = ModelBarang::latest()->take(1)->get();
-         
+          
             if(count($cekData) == 0){
                 $kode_barang = "BRG001";
             }else{
@@ -55,7 +56,6 @@ class DataBarangController extends Controller
                 $urutan++;
                 $kode_barang = 'BRG'. sprintf("%03s", $urutan);
             }
-
             $simpan = ModelBarang::create([
                 'kode_supplier' => $request->get('kode_supplier'),
                 'kode_barang' => $kode_barang,
@@ -63,20 +63,17 @@ class DataBarangController extends Controller
                 'stock' => $request->get('stock'),
                 'keterangan_barang' => $request->get('keterangan_barang'),
             ]);
-
             if($simpan){
                 $response = array(
                     'status' => 'berhasil',
-                    'data' => $cek
                 );
                 return response()->json($response, 200);
 
             }else{
                 $response = array(
                     'status' => 'gagal',
-                    'data' => $simpan
                 );
-            return response()->json($response, 404);
+                 return response()->json($response, 404);
             }
         }
     }
@@ -108,21 +105,33 @@ class DataBarangController extends Controller
 
     public function getBarangSupplier(Request $request)
     {
-        $cek = ModelBarang::where('kode_supplier', $request->get('kode_supplier'))->get();
-        if($cek){
-            $response = array(
-                'status' => 'berhasil',
-                'data' => $cek
-            );
-            return response()->json($response, 200);
 
-        }else{
-            $response = array(
-                'status' => 'gagal',
-                'pesan' => "Gagal Mengambil Data"
-            );
-        return response()->json($response, 404);
+        $supplier = ModelBarang::orderby('nama_barang','asc')->select('kode_barang','nama_barang')->where('kode_supplier', '=', $request->get('kode_supplier'))->get();
+  
+        $response = array();
+        foreach($supplier as $row){
+           $response[] = array(
+                "id"=>$row->kode_barang,
+                "text"=>$row->nama_barang
+           );
         }
+  
+        return response()->json($response);
+        // $cek = ModelBarang::where('kode_supplier', $request->get('kode_supplier'))->get();
+        // if($cek){
+        //     $response = array(
+        //         'status' => 'berhasil',
+        //         'data' => $cek
+        //     );
+        //     return response()->json($response, 200);
+
+        // }else{
+        //     $response = array(
+        //         'status' => 'gagal',
+        //         'pesan' => "Gagal Mengambil Data"
+        //     );
+        // return response()->json($response, 404);
+        // }
     }
 
     /**

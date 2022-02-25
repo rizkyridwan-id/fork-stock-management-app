@@ -25,7 +25,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <table id="tbl_users" class="table table-bordered table-striped">
+                <table id="tbl_penerimaan_barang" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -45,5 +45,9 @@
         </div>
     </section>
     @include('penerimaanbarang/modalPenerimaanbarang')
-
+    <script>
+        $(document).ready(function() {
+            getDataPenerimaanBarang()
+        })
+    </script>
 @stop

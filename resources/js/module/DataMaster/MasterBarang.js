@@ -26,13 +26,7 @@ window.showModalEditDataBarang = function (e) {
                     $("#keterangan_barang").val(el.keterangan_barang);
                     $("#stock").val(el.stock);
                     var newOption = new Option('CP0012', el.kode_supplier, true, true);
-                    // Append it to the select
-                    console.log(newOption)
                     $('#kode_supplier').append(newOption).trigger('change');
-                    // $("#kode_supplier")
-                    //     .select2()
-                    //     .val(el.kode_supplier)
-                    //     .trigger("change");
                 });
                 $("#MasterModalTambahBarang").modal("show");
             } else {

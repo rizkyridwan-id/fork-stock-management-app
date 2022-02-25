@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('jumlah');
             $table->string('tgl_keluar');
             $table->integer('kode_divisi');
-            $table->string('atas_nama');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }

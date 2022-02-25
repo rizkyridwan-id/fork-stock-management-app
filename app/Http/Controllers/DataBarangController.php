@@ -106,6 +106,25 @@ class DataBarangController extends Controller
         }
     }
 
+    public function getBarangSupplier(Request $request)
+    {
+        $cek = ModelBarang::where('kode_supplier', $request->get('kode_supplier'))->get();
+        if($cek){
+            $response = array(
+                'status' => 'berhasil',
+                'data' => $cek
+            );
+            return response()->json($response, 200);
+
+        }else{
+            $response = array(
+                'status' => 'gagal',
+                'pesan' => "Gagal Mengambil Data"
+            );
+        return response()->json($response, 404);
+        }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -206,6 +225,27 @@ class DataBarangController extends Controller
            $response[] = array(
                 "id"=>$row->kode_supplier,
                 "text"=>$row->nama_supplier
+           );
+        }
+  
+        return response()->json($response);
+    	
+    }
+    public function dataBarangAjax(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == ''){
+           $supplier = ModelBarang::orderby('nama_barang','asc')->select('kode_barang','nama_barang')->limit(5)->get();
+        }else{
+           $supplier = ModelBarang::orderby('nama_barang','asc')->select('kode_barang','nama_barang')->where('nama_barang', 'like', '%' .$search . '%')->limit(5)->get();
+        }
+  
+        $response = array();
+        foreach($supplier as $row){
+           $response[] = array(
+                "id"=>$row->kode_barang,
+                "text"=>$row->kode_barang .' - '.$row->nama_barang
            );
         }
   

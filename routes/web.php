@@ -30,7 +30,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('master-barang', DataBarangController::class);
+    Route::post('get-barang-by-kode-supplier',[DataBarangController::class,'getBarangSupplier'])->name('master-barang.getBarangSupplier');
+   
     Route::get('get-data-barang',[DataBarangController::class,'dataTable'])->name('master-barang.getDataAll');
+    Route::post('get-dataBarangAjax',[DataBarangController::class,'dataBarangAjax'])->name('master-barang.dataBarangAjax');
     Route::post('get-datasupplierAjax',[DataBarangController::class,'datasupplierAjax'])->name('master-barang.datasupplierAjax');
   
     Route::resource('master-supplier', DataSupplierController::class);
@@ -41,9 +44,11 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('master-divisi', DivisiController::class);
     Route::get('get-data-divisi',[DivisiController::class,'dataTable'])->name('master-divisi.getDataAll');
-   
+    
     Route::resource('penerimaan-barang', PenerimaanBarangController::class);
     Route::resource('pengeluaran-barang', PengeluaranBarangController::class);
     Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');
+    Route::get('/cetak-laporan-penerimaan-barang',[PenerimaanBarangController::class,'generatePDFPenerimaanBarang']);
+    
     Route::get('/laporan-pengeluaran-barang', [PengeluaranBarangController::class, 'laporan'])->name('laporan-pengeluaran');
 });

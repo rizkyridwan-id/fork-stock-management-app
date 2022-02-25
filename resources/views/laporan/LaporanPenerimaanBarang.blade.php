@@ -13,7 +13,7 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <form>
+                <form action="{{ url('cetak-laporan-penerimaan-barang') }}">
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
@@ -37,6 +37,7 @@
                     </div>
                 </form>
             </div>
+            
             <!-- /.card-body -->
         </div>
     </section>

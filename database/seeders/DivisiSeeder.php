@@ -14,9 +14,13 @@ class DivisiSeeder extends Seeder
      */
     public function run()
     {
-        $divisi = ModelDivisi::create([
-            'kode_divisi' => 'DVS_APOTEK',
-            'nama_divisi' => "APOTEKER",
-        ]);
+        $data = [
+            array('kode_divisi' => 'DVS-001','nama_divisi' => "APOTEKER"),
+            array('kode_divisi' => 'DVS-002','nama_divisi' => "KEUANGAN"),
+            array('kode_divisi' => 'DVS-003','nama_divisi' => "PENJAUALAN")
+        ];
+        foreach ($data as $row) {
+            ModelDivisi::create($row);
+        }
     }
 }

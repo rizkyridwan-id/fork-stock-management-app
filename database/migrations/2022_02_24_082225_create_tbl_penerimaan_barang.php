@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('tgl_terima');
             $table->integer('stock');
             $table->string('username');
+            $table->string('keterangan');
             $table->timestamps();
         });
     }

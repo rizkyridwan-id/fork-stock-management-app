@@ -8332,6 +8332,111 @@ __webpack_require__(/*! ./helper */ "./resources/js/module/helper.js");
 
 __webpack_require__(/*! ./DataMaster/index */ "./resources/js/module/DataMaster/index.js");
 
+__webpack_require__(/*! ./penerimaan_barang */ "./resources/js/module/penerimaan_barang.js");
+
+/***/ }),
+
+/***/ "./resources/js/module/penerimaan_barang.js":
+/*!**************************************************!*\
+  !*** ./resources/js/module/penerimaan_barang.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _base_url_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base_url.js */ "./resources/js/module/base_url.js");
+
+
+window.showModalPenerimaanBarang = function () {
+  $("#kode_supplier").val("").change();
+  $("#kode_barang").val("");
+  $("#nama_barang").val("");
+  $("#keterangan_barang").val("");
+  $("#stock").val("");
+  $("#is_edit").val(false);
+  $("#ModalPenerimaanBarang").modal("show");
+};
+
+window.simpanPenerimaanBarang = function (e) {
+  e.preventDefault();
+  var form_data = $("#form_penerimaan_barang").serializeArray();
+  $.ajax({
+    url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/penerimaan-barang",
+    type: "POST",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    data: form_data,
+    success: function success(respons) {
+      if (respons.status == "berhasil") {
+        $("#ModalPenerimaanBarang").modal("hide");
+        ToastNotification("success", "Data Berhasil Disimpan");
+        getDataSupplier();
+        $("#form_tambah_supplier")[0].reset();
+      } else {
+        ToastNotification("info", respons.pesan);
+        return false;
+      }
+    },
+    error: function error(respons, textStatus, errorThrown) {
+      var _respons$responseJSON;
+
+      console.log(respons);
+      ToastNotification("info", ((_respons$responseJSON = respons.responseJSON) === null || _respons$responseJSON === void 0 ? void 0 : _respons$responseJSON.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
+    }
+  });
+};
+
+$(document).ready(function () {
+  $('.carisupplier').change(function () {
+    // console.log()
+    $.ajax({
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/get-barang-by-kode-supplier",
+      type: "POST",
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+      },
+      data: {
+        kode_supplier: $(this).val()
+      },
+      success: function success(respons) {
+        if (respons.status == "berhasil") {
+          var hasil = [];
+          respons.data.forEach(function (el) {
+            var row = {
+              'id': el.kode_barang,
+              'text': el.nama_barang
+            };
+            hasil.push(row);
+          }); //    console.log(hasil)
+
+          $("#kode_barang_terima_barang").select2({
+            placeholder: "Pilih Data Barang ...",
+            theme: "bootstrap4",
+            data: [{
+              id: "",
+              text: ""
+            }]
+          });
+          setTimeout(function () {
+            $("#kode_barang_terima_barang").select2({
+              placeholder: "Pilih Data Barang ...",
+              theme: "bootstrap4",
+              data: hasil
+            });
+          }, 300);
+        } else {
+          ToastNotification("error", respons.pesan);
+          return false;
+        }
+      },
+      error: function error(respons, textStatus, errorThrown) {
+        ToastNotification("error", respons.responseJSON.pesan);
+      }
+    });
+  });
+});
+
 /***/ }),
 
 /***/ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js":

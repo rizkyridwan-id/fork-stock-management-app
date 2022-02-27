@@ -8587,7 +8587,7 @@ window.simpanPengeluaranBarang = function (e) {
         var newOption = new Option('', '', true, true);
         $('#kode_divisi_pengeluaran_barang').append(newOption).trigger('change');
       } else {
-        ToastNotification("info", respons.pesan);
+        ToastNotification("info", respons === null || respons === void 0 ? void 0 : respons.data);
         return false;
       }
     },
@@ -8595,7 +8595,7 @@ window.simpanPengeluaranBarang = function (e) {
       var _respons$responseJSON;
 
       console.log(respons);
-      ToastNotification("info", ((_respons$responseJSON = respons.responseJSON) === null || _respons$responseJSON === void 0 ? void 0 : _respons$responseJSON.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
+      ToastNotification("info", ((_respons$responseJSON = respons.responseJSON) === null || _respons$responseJSON === void 0 ? void 0 : _respons$responseJSON.data) || "Terjadi Kesalahan Saat Menyimpan Data");
     }
   });
 };

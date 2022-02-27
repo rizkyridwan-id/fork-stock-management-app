@@ -43,6 +43,20 @@ class PengeluaranBarangController extends Controller
     public function store(Request $request)
     {
         $cekData = ModelBarang::where('kode_barang', '=', $request->get('kode_barang'))->get();
+        if($cekData[0]->stock === 0){
+            $response = array(
+                'status' => 'error',
+                'data' => "Stock Barang ini sudah habis"
+            );
+            return response()->json($response, 401);
+        }
+        if($request->get('jumlah') > $cekData[0]->stock){
+            $response = array(
+                'status' => 'error',
+                'data' => "Tidak Boleh Melebihi Stock Barang yang tersedia"
+            );
+            return response()->json($response, 401);
+        }
         $stockbaru = $cekData[0]->stock - $request->get('jumlah');
         $updatebarang = ModelBarang::where('kode_barang', $request->get('kode_barang'))
         ->update([
@@ -150,7 +164,7 @@ class PengeluaranBarangController extends Controller
         $data['data'] = DB::table('tbl_pengeluaran_barang as pb')
         ->join('tbl_barang as brg', 'pb.kode_barang', '=', 'brg.kode_barang')
         ->join('tbl_divisi as dv', 'dv.kode_divisi', '=', 'pb.kode_divisi')
-        ->select('pb.jumlah','pb.tgl_keluar','pb.username','pb.no_pengeluaran','brg.kode_barang','brg.nama_barang','dv.kode_divisi','dv.nama_divisi','pb.keterangan')
+        ->select('pb.jumlah','pb.tgl_keluar','pb.username','pb.no_pengeluaran','brg.kode_barang','brg.nama_barang','dv.kode_divisi','dv.nama_divisi','pb.keterangan','brg.harga_satuan')
         ->whereBetween('pb.tgl_keluar',[ $request->get('tgl_dari'),  $request->get('tgl_sampai')])
         ->get();
         $pdf = PDF::loadview('laporan.cetakLpaoranPengeluaranbarang', $data)->setPaper('a4', 'landscape');

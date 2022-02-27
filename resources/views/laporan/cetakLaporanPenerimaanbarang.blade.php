@@ -35,7 +35,7 @@
 <?php
 $no = 1;
 $stock = 0;
-
+$total = 0
 ?>
 
 <body>
@@ -49,12 +49,16 @@ $stock = 0;
             <th > Kode Barang </th>
             <th> Nama Barang </th>
             <th> Tgl Terima </th>
-            <th> Jumlah </th>
+            <th> Jumlah Barang</th>
+            <th> Harga Satuan </th>
+            <th> Jumlah Harga </th>
             <th> Penermia </th>
         </thead>
         <tbody>
             <?php foreach ($data as $item) : ?>
-            <?php $stock += $item->stock; ?>
+            <?php $stock += $item->stock; 
+            $total += $item->harga_satuan * $item->stock
+            ?>
             <tr class="text-center">
                 <td><?= $no++ ?></td>
                 <td><?= $item->no_penerimaan ?></td>
@@ -62,6 +66,8 @@ $stock = 0;
                 <td><?= $item->nama_barang ?></td>
                 <td><?= $item->tgl_terima ?></td>
                 <td><?= $item->stock ?></td>
+                <td><?= number_format($item->harga_satuan) ?></td>
+                <td><?= number_format($item->harga_satuan * $item->stock) ?></td>
                 <td><?= $item->username ?></td>
             </tr>
             <?php endforeach; ?>
@@ -70,6 +76,8 @@ $stock = 0;
             <tr class="text-center">
                 <td colspan="5"> Total Barang Masuk </td>
                 <td> <?= $stock ?></td>
+                <td> </td>
+                <td><?= number_format($total) ?></td>
                 <td></td>
             </tr>
         </tfoot>

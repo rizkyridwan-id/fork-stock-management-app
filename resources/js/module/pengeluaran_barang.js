@@ -71,7 +71,7 @@ window.simpanPengeluaranBarang = function (e) {
                 var newOption = new Option('','', true, true);
                 $('#kode_divisi_pengeluaran_barang').append(newOption).trigger('change');
             } else {
-                ToastNotification("info", respons.pesan);
+                ToastNotification("info", respons?.data);
                 return false;
             }
         },
@@ -79,7 +79,7 @@ window.simpanPengeluaranBarang = function (e) {
             console.log(respons);
             ToastNotification(
                 "info",
-                respons.responseJSON?.pesan ||
+                respons.responseJSON?.data ||
                     "Terjadi Kesalahan Saat Menyimpan Data"
             );
         },

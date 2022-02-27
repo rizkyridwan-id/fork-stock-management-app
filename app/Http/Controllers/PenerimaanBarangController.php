@@ -171,11 +171,11 @@ class PenerimaanBarangController extends Controller
     {
         $data['data'] = DB::table('tbl_penerimaan_barang as pb')
         ->join('tbl_barang as brg', 'pb.kode_barang', '=', 'brg.kode_barang')
-        ->select('pb.stock','pb.tgl_terima','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang')
+        ->select('pb.stock','pb.tgl_terima','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang','brg.harga_satuan')
         ->whereBetween('pb.tgl_terima',[ $request->get('tgl_dari'),  $request->get('tgl_sampai')])
         ->get();
 
-        $pdf = PDF::loadview('laporan.cetakLaporanPenerimaanbarang', $data)->setPaper('a4', 'portrait');
+        $pdf = PDF::loadview('laporan.cetakLaporanPenerimaanbarang', $data)->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 

@@ -10,6 +10,7 @@ use App\Models\ModelPenerimaanBarangController;
 use PDF;
 use DataTables;
 use Session;
+use DB;
 class PenerimaanBarangController extends Controller
 {
     /**
@@ -133,9 +134,31 @@ class PenerimaanBarangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deletePenerimaanBarang(Request $request)
     {
-        //
+        $cekData = ModelBarang::where('kode_barang', '=', $request->get('kode_barang'))->get();
+        $stockbaru = $cekData[0]->stock - $request->get('stock');
+        $updatebarang = ModelBarang::where('kode_barang', $request->get('kode_barang'))
+        ->update([
+            'stock' => $stockbaru,
+        ]);
+
+        $hasil = ModelPenerimaanBarangController::where('id', $request->get('id'))->delete();
+        if($hasil){
+             $response = array(
+                 'status' => 'berhasil',
+                 'pesan' =>'Data Berhasil Di hapus'
+             );
+             return response()->json($response, 200);
+         }else{
+             $response = array(
+                 'status' => 'error',
+                 'pesan' =>'Data Gagal Di hapus'
+             );
+             return response()->json($response, 200);
+         }
+
+
     }
 
     public function laporan()
@@ -144,12 +167,14 @@ class PenerimaanBarangController extends Controller
         
     }
 
-    public function generatePDFPenerimaanBarang()
+    public function generatePDFPenerimaanBarang(Request $request)
     {
-        $data = [
-            'title' => 'Welcome to ItSolutionStuff.com',
-            'date' => date('m/d/Y')
-        ];
+        $data['data'] = DB::table('tbl_penerimaan_barang as pb')
+        ->join('tbl_barang as brg', 'pb.kode_barang', '=', 'brg.kode_barang')
+        ->select('pb.stock','pb.tgl_terima','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang')
+        ->whereBetween('pb.tgl_terima',[ $request->get('tgl_dari'),  $request->get('tgl_sampai')])
+        ->get();
+
         $pdf = PDF::loadview('laporan.cetakLaporanPenerimaanbarang', $data)->setPaper('a4', 'portrait');
         return $pdf->stream();
     }
@@ -162,9 +187,8 @@ class PenerimaanBarangController extends Controller
                 ->addIndexColumn() //memberikan penomoran
                 ->addColumn('action', function($row){  
                     $enc_id = \Crypt::encrypt($row->id);
-                    $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditDataBarang('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
-                            <a onclick="hapusDataBarang('.$row->id.')" class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
-                    return $btn; 
+                    $btn = '<a onclick="hapusPenerimaanBarang(this)" data-id="'.$row->id.'" data-kode_barang="'.$row->kode_barang.'"  data-stock="'.$row->stock.'"  class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
+                    return date('Y-m-d') === $row->tgl_terima ?  $btn : 'Tidak Bisa  Mengapus Penerimaan Barang Kemarin'; 
                 })
                 ->rawColumns(['action'])   //merender content column dalam bentuk html
                 ->escapeColumns()  //mencegah XSS Attack

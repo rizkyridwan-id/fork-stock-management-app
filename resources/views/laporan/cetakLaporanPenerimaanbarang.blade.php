@@ -32,6 +32,11 @@
 
     </style>
 </head>
+<?php
+$no = 1;
+$stock = 0;
+
+?>
 
 <body>
     <h1>
@@ -40,20 +45,34 @@
     <table class='table table-bordered' cellspacing="0" cellpadding="2" rules="rows">
         <thead>
             <th class="text-center"> No </th>
-            <th> No Penerimaan </th>
-            <th> Kode Barang </th>
+            <th style="width:30px"> No Penerimaan </th>
+            <th style="width:30px"> Kode Barang </th>
+            <th> Nama Barang </th>
             <th> Tgl Terima </th>
             <th> Jumlah </th>
+            <th> Penermia </th>
         </thead>
         <tbody>
-            <tr>
-                <td class="text-center">1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>1</td>
+            <?php foreach ($data as $item) : ?>
+            <?php $stock += $item->stock; ?>
+            <tr class="text-center">
+                <td><?= $no++ ?></td>
+                <td><?= $item->no_penerimaan ?></td>
+                <td><?= $item->kode_barang ?></td>
+                <td><?= $item->nama_barang ?></td>
+                <td><?= $item->tgl_terima ?></td>
+                <td><?= $item->stock ?></td>
+                <td><?= $item->username ?></td>
             </tr>
+            <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr class="text-center">
+                <td colspan="5"> Total Barang Masuk </td>
+                <td> <?= $stock ?></td>
+                <td></td>
+            </tr>
+        </tfoot>
     </table>
 </body>
 

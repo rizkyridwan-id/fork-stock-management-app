@@ -112,26 +112,11 @@ class DataBarangController extends Controller
         foreach($supplier as $row){
            $response[] = array(
                 "id"=>$row->kode_barang,
-                "text"=>$row->nama_barang
+                "text"=>$row->kode_barang . " - " . $row->nama_barang
            );
         }
   
         return response()->json($response);
-        // $cek = ModelBarang::where('kode_supplier', $request->get('kode_supplier'))->get();
-        // if($cek){
-        //     $response = array(
-        //         'status' => 'berhasil',
-        //         'data' => $cek
-        //     );
-        //     return response()->json($response, 200);
-
-        // }else{
-        //     $response = array(
-        //         'status' => 'gagal',
-        //         'pesan' => "Gagal Mengambil Data"
-        //     );
-        // return response()->json($response, 404);
-        // }
     }
 
     /**
@@ -233,7 +218,7 @@ class DataBarangController extends Controller
         foreach($supplier as $row){
            $response[] = array(
                 "id"=>$row->kode_supplier,
-                "text"=>$row->nama_supplier
+                "text"=>$row->kode_supplier ." - ". $row->nama_supplier
            );
         }
   
@@ -254,7 +239,7 @@ class DataBarangController extends Controller
         foreach($supplier as $row){
            $response[] = array(
                 "id"=>$row->kode_barang,
-                "text"=>$row->kode_barang .' - '.$row->nama_barang
+                "text"=>$row->kode_barang .' - '. $row->nama_barang
            );
         }
   

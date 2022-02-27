@@ -18,6 +18,12 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create('id_ID');
+        $user = User::create([
+            'username' => 'superadmin',
+            'nama_lengkap' => 'superadmin',
+            'password' => bcrypt('123456'),
+            'remember_token' => Str::random(10),
+        ]);
         for($i = 1; $i <= 10; $i++){
             $user = User::create([
                 'username' => $faker->username,

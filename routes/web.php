@@ -49,8 +49,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('get-data-penerimaan-barang',[PenerimaanBarangController::class,'dataTable'])->name('master-penerimaan-barang.getDataAll');
    
     Route::resource('pengeluaran-barang', PengeluaranBarangController::class);
+    Route::post('/delete-penerimaan-barang', [PenerimaanBarangController::class, 'deletePenerimaanBarang'])->name('deletePenerimaanBarang');
     Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');
-    Route::get('/cetak-laporan-penerimaan-barang',[PenerimaanBarangController::class,'generatePDFPenerimaanBarang']);
+    Route::post('/cetak-laporan-penerimaan-barang',[PenerimaanBarangController::class,'generatePDFPenerimaanBarang'])->name('cetak-laporan-penerimaan');
     
     Route::get('/laporan-pengeluaran-barang', [PengeluaranBarangController::class, 'laporan'])->name('laporan-pengeluaran');
 });

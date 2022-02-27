@@ -8457,6 +8457,42 @@ window.getDataPenerimaanBarang = function () {
   });
 };
 
+window.hapusPenerimaanBarang = function (elem) {
+  var id = $(elem).data("id");
+  var kode_barang = $(elem).data("kode_barang");
+  var stock = $(elem).data("stock"); // console.log(kode,stock)
+
+  $.ajax({
+    url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/delete-penerimaan-barang",
+    type: "POST",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    data: {
+      id: id,
+      stock: stock,
+      kode_barang: kode_barang
+    },
+    success: function success(respons) {
+      if (respons.status == "berhasil") {
+        $("#ModalPenerimaanBarang").modal("hide");
+        ToastNotification("success", "Data Berhasil Disimpan");
+        getDataPenerimaanBarang();
+        $("#form_tambah_supplier")[0].reset();
+      } else {
+        ToastNotification("info", respons.pesan);
+        return false;
+      }
+    },
+    error: function error(respons, textStatus, errorThrown) {
+      var _respons$responseJSON2;
+
+      console.log(respons);
+      ToastNotification("info", ((_respons$responseJSON2 = respons.responseJSON) === null || _respons$responseJSON2 === void 0 ? void 0 : _respons$responseJSON2.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
+    }
+  });
+};
+
 /***/ }),
 
 /***/ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js":

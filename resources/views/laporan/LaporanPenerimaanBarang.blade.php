@@ -13,18 +13,19 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <form action="{{ url('cetak-laporan-penerimaan-barang') }}">
+                    {!! Form::open(['route' => 'cetak-laporan-penerimaan', 'method' => 'POST']) !!}
                     <div class="row">
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tanggal Dari</label>
-                                <input type="date" class="form-control">
+                                {!! Form::date('tgl_dari', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tanggal Sampai</label>
-                                <input type="date" class="form-control">
+                                {!! Form::date('tgl_sampai', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
+
                             </div>
                         </div>
                         <div class="col-4">
@@ -35,10 +36,9 @@
                         </div>
 
                     </div>
-                </form>
+                    {!! Form::close() !!}
             </div>
             
-            <!-- /.card-body -->
         </div>
     </section>
 @stop

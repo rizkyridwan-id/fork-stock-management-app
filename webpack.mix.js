@@ -11,7 +11,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js/app.js').version()
-    .sass('resources/css/app.scss', 'public/css/app.css', []);
+    .sass('resources/css/app.scss', 'public/css/app.css').minify('public/css/app.css');
 
     mix.setResourceRoot('../');
 mix.browserSync('127.0.0.1:8000');

@@ -15,10 +15,19 @@ class DashboardController extends Controller
         $dataterimabarang = ModelPenerimaanBarangController::where('tgl_terima', '=', date('Y-m-d'))->get();
         $datapengeluaranbarang = ModelPengeluaranBarangController::where('tgl_keluar', '=', date('Y-m-d'))->get();
 
+        $sumTerimaBarang = collect($dataterimabarang)
+        ->reduce(function($carry, $item){
+            return $carry + $item["stock"];
+        }, 0);
+        $sumPengeluaran = collect($datapengeluaranbarang)
+        ->reduce(function($carry, $item){
+            return $carry + $item["jumlah"];
+        }, 0);
+
         $data = array(
             'databarang' => count($databarang),
-            'databarangterima' => count($dataterimabarang),
-            'datapengeluaranbarang' => count($datapengeluaranbarang),
+            'databarangterima' => $sumTerimaBarang,
+            'datapengeluaranbarang' => $sumPengeluaran,
         );
 
         return view('dashboard.index',compact('data'));

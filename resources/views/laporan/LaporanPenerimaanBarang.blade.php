@@ -18,13 +18,13 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tanggal Dari</label>
-                                {!! Form::date('tgl_dari', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
+                                {!! Form::date('tgl_dari', date('Y-m-d'), ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tanggal Sampai</label>
-                                {!! Form::date('tgl_sampai', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
+                                {!! Form::date('tgl_sampai', date('Y-m-d'), ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
 
                             </div>
                         </div>

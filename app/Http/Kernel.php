@@ -43,7 +43,9 @@ class Kernel extends HttpKernel
         'auth' => [
             \App\Http\Middleware\CheckLogin::class,
         ],
-
+        'CheckSession' => [
+            \App\Http\Middleware\CheckSession::class
+        ],
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',

@@ -21,7 +21,7 @@ use App\Http\Controllers\DivisiController;
 |
 */
 
-Route::get('/', [LoginController::class, 'index'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('CheckSession');
 Route::post('/check-login', [LoginController::class, 'checklogin'])->name('check-login');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -35,7 +35,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('get-data-barang',[DataBarangController::class,'dataTable'])->name('master-barang.getDataAll');
     Route::post('get-dataBarangAjax',[DataBarangController::class,'dataBarangAjax'])->name('master-barang.dataBarangAjax');
     Route::post('get-datasupplierAjax',[DataBarangController::class,'datasupplierAjax'])->name('master-barang.datasupplierAjax');
-  
+    
+    Route::post('get-datadivisiAjax',[DivisiController::class,'dataDivisiAjax'])->name('master-barang.dataDivisiAjax');
     Route::resource('master-supplier', DataSupplierController::class);
     Route::get('get-data-supplier',[DataSupplierController::class,'dataTable'])->name('master-supplier.getDataAll');
     
@@ -47,11 +48,14 @@ Route::group(['middleware' => ['auth']], function () {
     
     Route::resource('penerimaan-barang', PenerimaanBarangController::class);
     Route::get('get-data-penerimaan-barang',[PenerimaanBarangController::class,'dataTable'])->name('master-penerimaan-barang.getDataAll');
+    
+    Route::get('get-data-pengeluaran-barang',[PengeluaranBarangController::class,'dataTable'])->name('master-pengeluaran-barang.getDataAll');
    
     Route::resource('pengeluaran-barang', PengeluaranBarangController::class);
     Route::post('/delete-penerimaan-barang', [PenerimaanBarangController::class, 'deletePenerimaanBarang'])->name('deletePenerimaanBarang');
     Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');
     Route::post('/cetak-laporan-penerimaan-barang',[PenerimaanBarangController::class,'generatePDFPenerimaanBarang'])->name('cetak-laporan-penerimaan');
+    Route::post('/cetak-laporan-pengeluaran',[PengeluaranBarangController::class,'generatePDFPengeluaranBarang'])->name('cetak-laporan-pengeluaran');
     
     Route::get('/laporan-pengeluaran-barang', [PengeluaranBarangController::class, 'laporan'])->name('laporan-pengeluaran');
 });

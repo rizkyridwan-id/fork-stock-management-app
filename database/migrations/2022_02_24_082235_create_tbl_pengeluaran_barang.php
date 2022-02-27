@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('kode_barang');
             $table->string('jumlah');
             $table->string('tgl_keluar');
-            $table->integer('kode_divisi');
+            $table->string('kode_divisi');
             $table->string('keterangan');
+            $table->string('username');
             $table->timestamps();
         });
     }

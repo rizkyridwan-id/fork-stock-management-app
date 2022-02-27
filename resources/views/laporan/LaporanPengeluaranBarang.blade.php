@@ -13,29 +13,30 @@
     <section class="content">
         <div class="card">
             <div class="card-body">
-                <form>
-                    <div class="row">
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Tanggal Dari</label>
-                                <input type="date" class="form-control">
-                            </div>
+                {!! Form::open(['route' => 'cetak-laporan-pengeluaran', 'method' => 'POST']) !!}
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Tanggal Dari</label>
+                            {!! Form::date('tgl_dari', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
                         </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>Tanggal Sampai</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <button type="submit" class="btn btn-block btn-primary">Cari Laporan</button>
-                            </div>
-                        </div>
-
                     </div>
-                </form>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>Tanggal Sampai</label>
+                            {!! Form::date('tgl_sampai', null, ['placeholder' => 'Masukan Tanggak', 'class' => 'form-control' ,'required']) !!}
+
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-block btn-primary">Cari Laporan</button>
+                        </div>
+                    </div>
+
+                </div>
+                {!! Form::close() !!}
             </div>
             <!-- /.card-body -->
         </div>

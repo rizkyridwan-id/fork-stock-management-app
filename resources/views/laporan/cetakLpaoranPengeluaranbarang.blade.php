@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Laporan Penerimaan Barang</title>
+    <title>Laporan Pengeluaran Barang</title>
     <style>
         html {
             padding-top: 10px;
@@ -40,37 +40,41 @@ $stock = 0;
 
 <body>
     <h1>
-        <center>Laporan <br>Penerimaan Barang </center>
+        <center>Laporan <br>Pengeluaran Barang </center>
     </h1>
     <table class='table table-bordered' cellspacing="0" cellpadding="2" rules="rows">
         <thead>
             <th class="text-center"> No </th>
-            <th> No Penerimaan </th>
-            <th > Kode Barang </th>
+            <th style="width:30px"> No Pengeluaran </th>
+            <th style="width:30px"> Kode Barang </th>
             <th> Nama Barang </th>
-            <th> Tgl Terima </th>
+            <th> Tgl Keluar </th>
             <th> Jumlah </th>
-            <th> Penermia </th>
+            <th> Divisi </th>
+            <th> Keterangan </th>
+            <th> username </th>
         </thead>
         <tbody>
             <?php foreach ($data as $item) : ?>
-            <?php $stock += $item->stock; ?>
+            <?php $stock += $item->jumlah; ?>
             <tr class="text-center">
                 <td><?= $no++ ?></td>
-                <td><?= $item->no_penerimaan ?></td>
+                <td><?= $item->no_pengeluaran ?></td>
                 <td><?= $item->kode_barang ?></td>
                 <td><?= $item->nama_barang ?></td>
-                <td><?= $item->tgl_terima ?></td>
-                <td><?= $item->stock ?></td>
+                <td><?= $item->tgl_keluar ?></td>
+                <td><?= $item->jumlah ?></td>
+                <td><?= $item->kode_divisi ?> - <?= $item->nama_divisi ?></td>
+                <td><?= $item->keterangan ?></td>
                 <td><?= $item->username ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
         <tfoot>
             <tr class="text-center">
-                <td colspan="5"> Total Barang Masuk </td>
+                <td colspan="5"> Total Barang Keluar </td>
                 <td> <?= $stock ?></td>
-                <td></td>
+                <td colspan="3"></td>
             </tr>
         </tfoot>
     </table>

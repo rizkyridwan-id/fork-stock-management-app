@@ -8329,6 +8329,8 @@ __webpack_require__(/*! ./DataMaster/index */ "./resources/js/module/DataMaster/
 
 __webpack_require__(/*! ./penerimaan_barang */ "./resources/js/module/penerimaan_barang.js");
 
+__webpack_require__(/*! ./pengeluaran_barang */ "./resources/js/module/pengeluaran_barang.js");
+
 /***/ }),
 
 /***/ "./resources/js/module/penerimaan_barang.js":
@@ -8490,6 +8492,148 @@ window.hapusPenerimaanBarang = function (elem) {
       console.log(respons);
       ToastNotification("info", ((_respons$responseJSON2 = respons.responseJSON) === null || _respons$responseJSON2 === void 0 ? void 0 : _respons$responseJSON2.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
     }
+  });
+};
+
+/***/ }),
+
+/***/ "./resources/js/module/pengeluaran_barang.js":
+/*!***************************************************!*\
+  !*** ./resources/js/module/pengeluaran_barang.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _base_url_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base_url.js */ "./resources/js/module/base_url.js");
+
+
+window.showModalPengeluaranBarang = function () {
+  $("#is_edit").val(false);
+  $("#ModalPengeluaranBarang").modal("show");
+};
+
+$(document).ready(function () {
+  $("#kode_barang_pengeluaran_barang").select2({
+    placeholder: "Pilih Kode Barang",
+    theme: "bootstrap4",
+    ajax: {
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/get-dataBarangAjax",
+      type: "post",
+      dataType: "json",
+      delay: 250,
+      data: function data(params) {
+        return {
+          _token: $('meta[name="csrf-token"]').attr("content"),
+          search: params.term // search term
+
+        };
+      },
+      processResults: function processResults(response) {
+        return {
+          results: response
+        };
+      },
+      cache: true
+    }
+  });
+  $("#kode_divisi_pengeluaran_barang").select2({
+    placeholder: "Pilih Kode Barang",
+    theme: "bootstrap4",
+    ajax: {
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/get-datadivisiAjax",
+      type: "post",
+      dataType: "json",
+      delay: 250,
+      data: function data(params) {
+        return {
+          _token: $('meta[name="csrf-token"]').attr("content"),
+          search: params.term // search term
+
+        };
+      },
+      processResults: function processResults(response) {
+        return {
+          results: response
+        };
+      },
+      cache: true
+    }
+  });
+});
+
+window.simpanPengeluaranBarang = function (e) {
+  e.preventDefault();
+  var form_data = $("#form_pengeluaran_barang").serializeArray();
+  $.ajax({
+    url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/pengeluaran-barang",
+    type: "POST",
+    headers: {
+      "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
+    },
+    data: form_data,
+    success: function success(respons) {
+      if (respons.status == "berhasil") {
+        $("#ModalPengeluaranBarang").modal("hide");
+        ToastNotification("success", "Data Berhasil Disimpan");
+        getPengeluaranBarang();
+        $("#form_pengeluaran_barang")[0].reset();
+      } else {
+        ToastNotification("info", respons.pesan);
+        return false;
+      }
+    },
+    error: function error(respons, textStatus, errorThrown) {
+      var _respons$responseJSON;
+
+      console.log(respons);
+      ToastNotification("info", ((_respons$responseJSON = respons.responseJSON) === null || _respons$responseJSON === void 0 ? void 0 : _respons$responseJSON.pesan) || "Terjadi Kesalahan Saat Menyimpan Data");
+    }
+  });
+};
+
+window.getPengeluaranBarang = function () {
+  $("#tbl_pengeluaran_barang").DataTable({
+    pageLength: 10,
+    lengthChange: true,
+    bFilter: true,
+    destroy: true,
+    processing: true,
+    serverSide: true,
+    oLanguage: {
+      sZeroRecords: "Tidak Ada Data",
+      sSearch: "Pencarian _INPUT_",
+      sLengthMenu: "_MENU_",
+      sInfo: "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+      sInfoEmpty: "",
+      oPaginate: {
+        sNext: "<i class='fa fa-angle-right'></i>",
+        sPrevious: "<i class='fa fa-angle-left'></i>"
+      }
+    },
+    ajax: {
+      url: _base_url_js__WEBPACK_IMPORTED_MODULE_0__.base_url + "/get-data-pengeluaran-barang",
+      type: "GET"
+    },
+    columns: [{
+      data: "DT_RowIndex",
+      name: "DT_Row_Index",
+      className: "text-center",
+      orderable: false,
+      searchable: false
+    }, {
+      data: "no_pengeluaran"
+    }, {
+      data: "kode_barang"
+    }, {
+      data: "jumlah"
+    }, {
+      data: "tgl_keluar"
+    }, {
+      data: "kode_divisi"
+    }, {
+      data: "keterangan"
+    }]
   });
 };
 

@@ -246,4 +246,5 @@ class DataBarangController extends Controller
         return response()->json($response);
     	
     }
+  
 }

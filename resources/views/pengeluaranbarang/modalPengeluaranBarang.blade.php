@@ -1,45 +1,39 @@
-<div class="modal fade" role="dialog" id="ModalPenerimaanBarang">
+<div class="modal fade" role="dialog" id="ModalPengeluaranBarang">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Penerimaan Barang</h5>
+                <h5 class="modal-title">Pengeluaran Barang</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="form_penerimaan_barang" onsubmit="simpanPenerimaanBarang(event)">
+                <form method="POST" id="form_pengeluaran_barang" onsubmit="simpanPengeluaranBarang(event)">
                     <div class="row">
                         <div class="col-12">
                             <input class="form-control" id="is_edit" autocomplete="off" type="hidden" name="is_edit">
                         </div>
                         <div class="col-12">
-                            <label> Kode Supplier </label>
-                            <select class="form-control carisupplier" id="kode_supplier_barang" name="kode_supplier">
+                            <label> Kode Divisi </label>
+                            <select class="form-control" id="kode_divisi_pengeluaran_barang" name="kode_divisi">
                                 <option value=""> Silahkan Pilih Supplier </option>
-                                @foreach($datasupplier as $item)
-                                <option value="{{$item->kode_supplier}}">{{$item->nama_supplier}}</option>
+                                @foreach($divisi as $item)
+                                <option value="{{$item->kode_divisi}}">{{$item->nama_divisi}}</option>
                               @endforeach
                             </select>
                             <br>
                         </div>
                         <div class="col-12">
                             <label> Kode Barang </label>
-                            <select class="form-control" id="kode_barang_terima_barang" name="kode_barang">
+                            <select class="form-control" id="kode_barang_pengeluaran_barang" name="kode_barang">
                                 <option value=""> Silahkan Pilih Kode Barang </option>
                             </select>
                             <br>
                         </div>
                         <div class="col-12">
-                            <label> Stock </label>
-                            <input class="form-control" id="stock" autocomplete="off" type="number" name="stock"
-                                placeholder="Stock" required>
-                            <br>
-                        </div>
-                        <div class="col-12">
-                            <label> Tanggal Terima </label>
-                            <input class="form-control" id="tgl_terima_barang" autocomplete="off" type="date"
-                                name="tgl_terima" placeholder="Tangal Terima Barang" required>
+                            <label> Jumlah </label>
+                            <input class="form-control" id="jumlah" autocomplete="off" type="number"
+                                name="jumlah" placeholder="Masukan Jumalh" required>
                             <br>
                         </div>
                         <div class="col-12">

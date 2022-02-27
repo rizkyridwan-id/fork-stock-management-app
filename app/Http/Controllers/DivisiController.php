@@ -174,4 +174,26 @@ class DivisiController extends Controller
                 ->toJson(); //merubah response dalam bentuk Json
         } 
     }
+
+    public function dataDivisiAjax(Request $request)
+    {
+        $search = $request->search;
+
+        if($search == ''){
+           $supplier = ModelDivisi::orderby('nama_divisi','asc')->select('kode_divisi','nama_divisi')->limit(5)->get();
+        }else{
+           $supplier = ModelDivisi::orderby('nama_divisi','asc')->select('kode_divisi','nama_divisi')->where('nama_divisi', 'like', '%' .$search . '%')->limit(5)->get();
+        }
+  
+        $response = array();
+        foreach($supplier as $row){
+           $response[] = array(
+                "id"=>$row->kode_divisi,
+                "text"=>$row->kode_divisi .' - '. $row->nama_divisi
+           );
+        }
+  
+        return response()->json($response);
+    	
+    }
 }

@@ -59,5 +59,13 @@
     </div>
 </div>
 <script type="text/javascript">
-
+var rupiah = document.getElementById('harga_satuan');
+		rupiah.addEventListener('keyup', function(e){
+			// tambahkan 'Rp.' pada saat form di ketik
+			// gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+			rupiah.value = formatRupiah(this.value);
+		});
+ 
+		/* Fungsi formatRupiah */
+		
 </script>

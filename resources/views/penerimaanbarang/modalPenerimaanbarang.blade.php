@@ -38,7 +38,7 @@
                         </div>
                         <div class="col-12">
                             <label> Tanggal Terima </label>
-                            <input class="form-control" id="tgl_terima_barang" autocomplete="off" type="date"
+                            <input value="<?= date('Y-m-d') ?>" class="form-control" id="tgl_terima_barang" autocomplete="off" type="date"
                                 name="tgl_terima" placeholder="Tangal Terima Barang" required>
                             <br>
                         </div>

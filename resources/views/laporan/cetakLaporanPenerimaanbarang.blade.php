@@ -57,7 +57,7 @@ $total = 0
         <tbody>
             <?php foreach ($data as $item) : ?>
             <?php $stock += $item->stock; 
-            $total += $item->harga_satuan * $item->stock
+            $total += (int)$item->harga_satuan * $item->stock
             ?>
             <tr class="text-center">
                 <td><?= $no++ ?></td>
@@ -66,8 +66,8 @@ $total = 0
                 <td><?= $item->nama_barang ?></td>
                 <td><?= $item->tgl_terima ?></td>
                 <td><?= $item->stock ?></td>
-                <td><?= number_format($item->harga_satuan) ?></td>
-                <td><?= number_format($item->harga_satuan * $item->stock) ?></td>
+                <td><?= number_format((int)$item->harga_satuan) ?></td>
+                <td><?= number_format((int)$item->harga_satuan * $item->stock) ?></td>
                 <td><?= $item->username ?></td>
             </tr>
             <?php endforeach; ?>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('nama_barang');
             $table->longText('keterangan_barang');
             $table->integer('stock');
-            $table->text('harga_satuan');
+            $table->integer('harga_satuan');
             $table->timestamps();
         });
     }

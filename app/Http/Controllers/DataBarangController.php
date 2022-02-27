@@ -56,12 +56,13 @@ class DataBarangController extends Controller
             }else{
                 $kode_barang = "BRG001";
             }
+            $harga_satuan = str_replace('.', '', $request->get('harga_satuan'));
             $simpan = ModelBarang::create([
                 'kode_supplier' => $request->get('kode_supplier'),
                 'kode_barang' => $kode_barang,
                 'nama_barang' => $request->get('nama_barang'),
                 'stock' => $request->get('stock'),
-                'harga_satuan' => $request->get('harga_satuan'),
+                'harga_satuan' => (int)$harga_satuan,
                 'keterangan_barang' => $request->get('keterangan_barang'),
             ]);
             if($simpan){
@@ -140,12 +141,13 @@ class DataBarangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $harga_satuan = str_replace('.', '', $request->get('harga_satuan'));
         $cek = ModelBarang::where('kode_barang', $request->get('kode_barang'))
         ->update([
             'nama_barang' => $request->get('nama_barang'),
             'kode_supplier' => $request->get('kode_supplier'),
             'stock' => $request->get('stock'),
-            'harga_satuan' => $request->get('harga_satuan'),
+            'harga_satuan' => (int)$harga_satuan,
             'keterangan_barang' => $request->get('keterangan_barang'),
          ]);
          if($cek){
@@ -199,6 +201,9 @@ class DataBarangController extends Controller
                     $btn = '<a class="edit btn btn-sm btn-primary" onclick="showModalEditDataBarang('.$row->id.')"> <i class="fas fa-edit"></i> Edit</a>
                             <a onclick="hapusDataBarang('.$row->id.')" class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
                     return $btn; 
+                })
+                ->editColumn('harga_satuan', function ($data) {
+                    return number_format($data->harga_satuan, 0);
                 })
                 ->rawColumns(['action'])   //merender content column dalam bentuk html
                 ->escapeColumns()  //mencegah XSS Attack

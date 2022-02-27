@@ -68,6 +68,8 @@ window.simpanPengeluaranBarang = function (e) {
                 ToastNotification("success", "Data Berhasil Disimpan");
                 getPengeluaranBarang()
                 $("#form_pengeluaran_barang")[0].reset();
+                var newOption = new Option('','', true, true);
+                $('#kode_divisi_pengeluaran_barang').append(newOption).trigger('change');
             } else {
                 ToastNotification("info", respons.pesan);
                 return false;

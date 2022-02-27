@@ -15,8 +15,8 @@ class BarangSeeder extends Seeder
     public function run()
     {
         $data = [
-            array('kode_supplier' => 'SP-01', 'kode_barang' => 'BRG001', 'nama_barang' => "MASKER N05", 'stock' => 20, 'keterangan_barang' => "MASKER UNTUK DIJUAL",),
-            array('kode_supplier' => 'SP-02', 'kode_barang' => 'BRG002', 'nama_barang' => "MASKER N05", 'stock' => 20, 'keterangan_barang' => "MASKER UNTUK DIJUAL",)
+            array('kode_supplier' => 'SP-01', 'kode_barang' => 'BRG001', 'nama_barang' => "MASKER N05", 'stock' => 20, 'keterangan_barang' => "MASKER UNTUK DIJUAL",'harga_satuan'=>"10000"),
+            array('kode_supplier' => 'SP-02', 'kode_barang' => 'BRG002', 'nama_barang' => "MASKER N05", 'stock' => 20, 'keterangan_barang' => "MASKER UNTUK DIJUAL",'harga_satuan'=>"20000")
         ];
         foreach ($data as $row) {
             ModelBarang::create($row);

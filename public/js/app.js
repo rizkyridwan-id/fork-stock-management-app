@@ -7501,6 +7501,7 @@ __webpack_require__.r(__webpack_exports__);
 window.showModalDataBarang = function () {
   $("#kode_supplier").val("").change();
   $("#kode_barang").val("");
+  $("#harga_satuan").val("");
   $("#nama_barang").val("");
   $("#keterangan_barang").val("");
   $("#stock").val("");
@@ -7521,9 +7522,10 @@ window.showModalEditDataBarang = function (e) {
           $("#is_edit").val(true);
           $("#kode_barang").val(el.kode_barang);
           $("#nama_barang").val(el.nama_barang);
+          $("#harga_satuan").val(el.harga_satuan);
           $("#keterangan_barang").val(el.keterangan_barang);
           $("#stock").val(el.stock);
-          var newOption = new Option('CP0012', el.kode_supplier, true, true);
+          var newOption = new Option(el.kode_supplier, el.kode_supplier, true, true);
           $('#kode_supplier').append(newOption).trigger('change');
         });
         $("#MasterModalTambahBarang").modal("show");
@@ -7632,6 +7634,8 @@ window.getDataBarang = function () {
       data: "nama_barang"
     }, {
       data: "stock"
+    }, {
+      data: "harga_satuan"
     }, {
       data: "keterangan_barang"
     }, {
@@ -8369,7 +8373,9 @@ window.simpanPenerimaanBarang = function (e) {
         $("#ModalPenerimaanBarang").modal("hide");
         ToastNotification("success", "Data Berhasil Disimpan");
         getDataPenerimaanBarang();
-        $("#form_tambah_supplier")[0].reset();
+        $("#form_penerimaan_barang")[0].reset();
+        var newOption = new Option('', '', true, true);
+        $('#kode_supplier_barang').append(newOption).trigger('change');
       } else {
         ToastNotification("info", respons.pesan);
         return false;
@@ -8480,7 +8486,7 @@ window.hapusPenerimaanBarang = function (elem) {
         $("#ModalPenerimaanBarang").modal("hide");
         ToastNotification("success", "Data Berhasil Disimpan");
         getDataPenerimaanBarang();
-        $("#form_tambah_supplier")[0].reset();
+        $("#form_penerimaan_barang")[0].reset();
       } else {
         ToastNotification("info", respons.pesan);
         return false;
@@ -8578,6 +8584,8 @@ window.simpanPengeluaranBarang = function (e) {
         ToastNotification("success", "Data Berhasil Disimpan");
         getPengeluaranBarang();
         $("#form_pengeluaran_barang")[0].reset();
+        var newOption = new Option('', '', true, true);
+        $('#kode_divisi_pengeluaran_barang').append(newOption).trigger('change');
       } else {
         ToastNotification("info", respons.pesan);
         return false;

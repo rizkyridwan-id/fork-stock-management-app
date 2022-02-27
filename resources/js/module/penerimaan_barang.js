@@ -26,7 +26,9 @@ window.simpanPenerimaanBarang = function (e) {
                 $("#ModalPenerimaanBarang").modal("hide");
                 ToastNotification("success", "Data Berhasil Disimpan");
                 getDataPenerimaanBarang();
-                $("#form_tambah_supplier")[0].reset();
+                $("#form_penerimaan_barang")[0].reset();
+                var newOption = new Option('','', true, true);
+                    $('#kode_supplier_barang').append(newOption).trigger('change');
             } else {
                 ToastNotification("info", respons.pesan);
                 return false;
@@ -151,7 +153,7 @@ window.hapusPenerimaanBarang = function(elem){
                 $("#ModalPenerimaanBarang").modal("hide");
                 ToastNotification("success", "Data Berhasil Disimpan");
                 getDataPenerimaanBarang();
-                $("#form_tambah_supplier")[0].reset();
+                $("#form_penerimaan_barang")[0].reset();
             } else {
                 ToastNotification("info", respons.pesan);
                 return false;

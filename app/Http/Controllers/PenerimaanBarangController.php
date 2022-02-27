@@ -58,14 +58,14 @@ class PenerimaanBarangController extends Controller
                 'stock' => $stockbaru,
             ]);
 
-            $cekNoPenerimaan = ModelPenerimaanBarangController::latest()->take(1)->get();
+            $cekNoPenerimaan = ModelPenerimaanBarangController::max('no_penerimaan');
          
-            if(count($cekNoPenerimaan) == 0){
-                $no_penerimaan = "TRX001";
-            }else{
-                $urutan = (int) substr($cekNoPenerimaan[0]->no_penerimaan, 3, 3);
+            if($cekNoPenerimaan){
+                $urutan = (int) substr($cekNoPenerimaan, 3, 3);
                 $urutan++;
                 $no_penerimaan = 'TRX'. sprintf("%03s", $urutan);
+            }else{
+                $no_penerimaan = "TRX001";
             }
 
             $simpan = ModelPenerimaanBarangController::create([

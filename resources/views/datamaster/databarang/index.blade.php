@@ -33,6 +33,7 @@
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
                         <th>Stock</th>
+                        <th>Harga Satuan</th>
                         <th>Keterangan</th>
                         <th>Actions</th>
                     </tr>

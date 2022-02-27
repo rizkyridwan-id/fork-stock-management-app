@@ -10,6 +10,6 @@ class ModelBarang extends Model
     use HasFactory;
     protected $table = 'tbl_barang';
     protected $fillable = [
-        'kode_supplier','kode_barang','nama_barang','keterangan_barang','stock'
+        'kode_supplier','kode_barang','nama_barang','keterangan_barang','stock','harga_satuan'
     ];
 }

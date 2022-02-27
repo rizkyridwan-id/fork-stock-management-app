@@ -46,21 +46,22 @@ class DataBarangController extends Controller
                 'pesan' =>"Kode ".$request->get('kode_barang') .'  Tersebut Sudah Ada'
             );
             return response()->json($response, 500);
+            
         }else{
-            $cekData = ModelBarang::latest()->take(1)->get();
-          
-            if(count($cekData) == 0){
-                $kode_barang = "BRG001";
-            }else{
-                $urutan = (int) substr($cekData[0]->kode_barang, 3, 3);
+            $cekData = ModelBarang::max('kode_barang');
+            if($cekData){
+                $urutan = (int) substr($cekData, 3, 3);
                 $urutan++;
                 $kode_barang = 'BRG'. sprintf("%03s", $urutan);
+            }else{
+                $kode_barang = "BRG001";
             }
             $simpan = ModelBarang::create([
                 'kode_supplier' => $request->get('kode_supplier'),
                 'kode_barang' => $kode_barang,
                 'nama_barang' => $request->get('nama_barang'),
                 'stock' => $request->get('stock'),
+                'harga_satuan' => $request->get('harga_satuan'),
                 'keterangan_barang' => $request->get('keterangan_barang'),
             ]);
             if($simpan){
@@ -144,6 +145,7 @@ class DataBarangController extends Controller
             'nama_barang' => $request->get('nama_barang'),
             'kode_supplier' => $request->get('kode_supplier'),
             'stock' => $request->get('stock'),
+            'harga_satuan' => $request->get('harga_satuan'),
             'keterangan_barang' => $request->get('keterangan_barang'),
          ]);
          if($cek){

@@ -37,6 +37,12 @@
                             <br>
                         </div>
                         <div class="col-12">
+                            <label> Harga Satuan </label>
+                            <input class="form-control" id="harga_satuan" autocomplete="off" type="text" name="harga_satuan"
+                                placeholder="Harga Satuan" required>
+                            <br>
+                        </div>
+                        <div class="col-12">
                             <label> Keterangan </label>
                             <input class="form-control" id="keterangan_barang" autocomplete="off" type="text"
                                 name="keterangan_barang" placeholder="Keterangan Barang" required>

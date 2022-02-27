@@ -49,14 +49,14 @@ class PengeluaranBarangController extends Controller
             'stock' => $stockbaru,
         ]);
 
-        $cekNoPenerimaan = ModelPengeluaranBarangController::latest()->take(1)->get();
+        $cekNoPenerimaan = ModelPengeluaranBarangController::max('no_pengeluaran');
          
-        if(count($cekNoPenerimaan) == 0){
-            $no_pengeluaran = "TRX001";
-        }else{
-            $urutan = (int) substr($cekNoPenerimaan[0]->no_pengeluaran, 3, 3);
+        if($cekNoPenerimaan){
+            $urutan = (int) substr($cekNoPenerimaan, 3, 3);
             $urutan++;
             $no_pengeluaran = 'TRX'. sprintf("%03s", $urutan);
+        }else{
+            $no_pengeluaran = "TRX001";
         }
         $simpan = ModelPengeluaranBarangController::create([
             'no_pengeluaran' => $no_pengeluaran,

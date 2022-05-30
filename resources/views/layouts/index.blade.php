@@ -68,12 +68,15 @@
                                         <p>Master Supplier</p>
                                     </a>
                                 </li>
+
+                                @if(Session::get('datauser')->first()->username == "superadmin")
                                 <li class="nav-item">
                                     <a href="{{ route('master-users.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Master User</p>
                                     </a>
                                 </li>
+                                @endif
                                 <li class="nav-item">
                                     <a href="{{ route('master-divisi.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

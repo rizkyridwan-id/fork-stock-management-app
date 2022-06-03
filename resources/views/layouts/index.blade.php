@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Toko Jaya Abadi | @yield('title')</title>
+    <title>PKM Baleendah | @yield('title')</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <meta name="base_url" content="{{ url('') }}">
     <script src="{{ asset('js/app.js') }}"></script>
@@ -31,7 +31,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="../../index3.html" class="brand-link text-center">
-                <span class="brand-text font-weight-light ">PUSKESMAS JAYA ABADI</span>
+                <span class="brand-text font-weight-light ">PUSKESMAS BALEENDAH</span>
             </a>
             <div class="sidebar">
                 <nav class="mt-2">
@@ -156,7 +156,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 3.2.0
             </div>
-            <strong>Copyright &copy; M Yassin</strong> 
+            <strong>Copyright &copy; Muhammad Yassin </strong> 
         </footer>
 
         <!-- Control Sidebar -->

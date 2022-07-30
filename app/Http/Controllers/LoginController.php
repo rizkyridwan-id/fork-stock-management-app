@@ -18,7 +18,7 @@ class LoginController extends Controller
         $cek = User::where('username', $request->get('username'))->get();
         if($cek){
             foreach ($cek as $key) {
-            \Session::put('datauser', $cek);
+            Session::put('datauser', $key);
             if(password_verify($request->get('password'), $key->password)) {
                 return redirect('/dashboard');
             }else{

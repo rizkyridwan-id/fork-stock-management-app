@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_pengeluaran');
             $table->string('kode_barang');
-            $table->string('jumlah');
+            $table->integer('jumlah');
             $table->string('tgl_keluar');
             $table->string('kode_divisi');
             $table->string('keterangan');

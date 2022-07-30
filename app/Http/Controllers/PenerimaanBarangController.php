@@ -174,7 +174,8 @@ class PenerimaanBarangController extends Controller
         ->select('pb.stock','pb.tgl_terima','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang','brg.harga_satuan')
         ->whereBetween('pb.tgl_terima',[ $request->get('tgl_dari'),  $request->get('tgl_sampai')])
         ->get();
-
+        $data['tanggal_dari'] = $request->get('tgl_dari');
+        $data['tanggal_sampai'] = $request->get('tgl_sampai');
         $pdf = PDF::loadview('laporan.cetakLaporanPenerimaanbarang', $data)->setPaper('a4', 'landscape');
         return $pdf->stream();
     }

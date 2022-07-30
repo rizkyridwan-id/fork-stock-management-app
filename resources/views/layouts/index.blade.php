@@ -110,7 +110,7 @@
                                 </p>
                             </a>
                             <ul class="nav nav-treeview"
-                                style="display: <?= $thisPage === '/laporan-penerimaan-barang' || $thisPage === '/laporan-pengeluaran-barang' ? 'block;' : 'none;' ?>">
+                                style="display: <?= $thisPage === '/laporan-penerimaan-barang' || $thisPage === '/laporan-barang-paling-banyak-digunakan' || $thisPage === '/laporan-pengeluaran-barang' ? 'block;' : 'none;' ?>">
                                 <li class="nav-item">
                                     <a href="{{ route('laporan-penerimaan') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -121,6 +121,12 @@
                                     <a href="{{ route('laporan-pengeluaran') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Laporan Pengeluaran</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('laporan-barang-paling-banyak-digunakan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan Barang Paling Banyak Digunakan</p>
                                     </a>
                                 </li>
                                

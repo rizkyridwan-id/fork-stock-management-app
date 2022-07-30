@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/laporan-penerimaan-barang', [PenerimaanBarangController::class, 'laporan'])->name('laporan-penerimaan');
     Route::post('/cetak-laporan-penerimaan-barang',[PenerimaanBarangController::class,'generatePDFPenerimaanBarang'])->name('cetak-laporan-penerimaan');
     Route::post('/cetak-laporan-pengeluaran',[PengeluaranBarangController::class,'generatePDFPengeluaranBarang'])->name('cetak-laporan-pengeluaran');
+    Route::post('/cetak-laporan-barang-paling-banyak',[PengeluaranBarangController::class,'generatePDFPengeluaranBarangPalingBanyak'])->name('cetak-laporan-barang-paling-banyak');
     
     Route::get('/laporan-pengeluaran-barang', [PengeluaranBarangController::class, 'laporan'])->name('laporan-pengeluaran');
+    Route::get('/laporan-barang-paling-banyak-digunakan', [PengeluaranBarangController::class, 'laporanpalingbanyak'])->name('laporan-barang-paling-banyak-digunakan');
 });

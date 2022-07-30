@@ -15,14 +15,16 @@ class LoginController extends Controller
 
     public function checklogin(Request $request)
     {
-        $cek = User::where('username', $request->get('username'))->first();
+        $cek = User::where('username', $request->get('username'))->get();
         if($cek){
-            if(password_verify($request->get('password'), $cek->password)) {
-                \Session::put('datauser', $cek);
+            foreach ($cek as $key) {
+            Session::put('datauser', $key);
+            if(password_verify($request->get('password'), $key->password)) {
                 return redirect('/dashboard');
             }else{
                 return redirect()->route('login')->with('info', 'Password Salah.');
             }
+        }
         }else{
             return redirect()->route('login')->with('info', 'Username dan password tidak terfaftar.');
         }
@@ -31,6 +33,7 @@ class LoginController extends Controller
     public function logout()
     {
         \Session::forget('datauser') ;
+        \Session::flush();
         return redirect('/');
     }
 }

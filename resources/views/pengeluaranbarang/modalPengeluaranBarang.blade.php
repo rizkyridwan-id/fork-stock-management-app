@@ -30,6 +30,7 @@
                             </select>
                             <br>
                         </div>
+                        {{-- {{session()->get('datauser')->username}} --}}
                         <div class="col-12">
                             <label> Jumlah </label>
                             <input class="form-control" id="jumlah" autocomplete="off" type="number"

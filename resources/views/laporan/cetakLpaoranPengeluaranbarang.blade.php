@@ -29,20 +29,37 @@
         .text-center {
             text-align: center;
         }
-
     </style>
 </head>
 <?php
 $no = 1;
 $stock = 0;
 $total = 0;
+$stockjml = 0;
+$nama = '';
 
+// foreach ($data as $item) {
+//     if ($item->kode_barang = $item->kode_barang) {
+//         // $stockjml = $stockjml +  $item->jumlah;
+//         // var_dump($item->nama_barang);  
+//         // $nama = $item->nama_barang;
+//         echo 'masuk f' . $item->nama_barang;
+//         return false;
+//     }else{
+//         echo 'ga masuk f';
+//         var_dump($item);
+//     }
+// }
 ?>
+
 
 <body>
     <h1>
         <center>Laporan <br>Pengeluaran Barang </center>
     </h1>
+    <h2>
+        <center> Periode <?= $tanggal_dari ?> / <?= $tanggal_sampai ?> </center>
+    </h2>
     <table class='table table-bordered' cellspacing="0" cellpadding="2" rules="rows">
         <thead>
             <th class="text-center"> No </th>
@@ -59,7 +76,8 @@ $total = 0;
         </thead>
         <tbody>
             <?php foreach ($data as $item) : ?>
-            <?php $stock += $item->jumlah; $total += $item->harga_satuan * $item->jumlah ?>
+            <?php $stock += $item->jumlah;
+            $total += $item->harga_satuan * $item->jumlah; ?>
             <tr class="text-center">
                 <td><?= $no++ ?></td>
                 <td><?= $item->no_pengeluaran ?></td>
@@ -77,15 +95,18 @@ $total = 0;
         </tbody>
         <tfoot>
             <tr class="text-center">
-                <td colspan="5"> Total Barang Keluar </td>
+                <td colspan="7"> Total Barang Keluar </td>
                 <td> <?= $stock ?></td>
-                <td colspan="3"></td>
+                <td></td>
                 <td> <?= number_format($total) ?></td>
-                <td> </td>
-
+                <td></td>
             </tr>
+          
         </tfoot>
     </table>
+
+
+
 </body>
 
 </html>

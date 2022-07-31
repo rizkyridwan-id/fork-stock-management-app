@@ -16,10 +16,10 @@ class LoginController extends Controller
     public function checklogin(Request $request)
     {
         $cek = User::where('username', $request->get('username'))->get();
-        if($cek){
+        if(count($cek) == 1){
             foreach ($cek as $key) {
-            Session::put('datauser', $key);
-            if(password_verify($request->get('password'), $key->password)) {
+                if(password_verify($request->get('password'), $key->password)) {
+                Session::put('datauser', $key);
                 return redirect('/dashboard');
             }else{
                 return redirect()->route('login')->with('info', 'Password Salah.');

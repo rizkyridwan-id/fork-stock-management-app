@@ -41,7 +41,7 @@ $nama = '';
 // foreach ($data as $item) {
 //     if ($item->kode_barang = $item->kode_barang) {
 //         // $stockjml = $stockjml +  $item->jumlah;
-//         // var_dump($item->nama_barang);  
+//         // var_dump($item->nama_barang);
 //         // $nama = $item->nama_barang;
 //         echo 'masuk f' . $item->nama_barang;
 //         return false;
@@ -83,7 +83,7 @@ $nama = '';
                 <td><?= $item->no_pengeluaran ?></td>
                 <td><?= $item->kode_barang ?></td>
                 <td><?= $item->nama_barang ?></td>
-                <td><?= $item->tgl_keluar ?></td>
+                <td><?= $item->created_at ?></td>
                 <td><?= $item->kode_divisi ?> - <?= $item->nama_divisi ?></td>
                 <td><?= $item->keterangan ?></td>
                 <td><?= $item->jumlah ?></td>
@@ -101,7 +101,7 @@ $nama = '';
                 <td> <?= number_format($total) ?></td>
                 <td></td>
             </tr>
-          
+
         </tfoot>
     </table>
 

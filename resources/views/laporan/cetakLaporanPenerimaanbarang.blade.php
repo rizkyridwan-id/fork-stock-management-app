@@ -53,7 +53,7 @@ $total = 0
             <th> Jumlah Barang</th>
             <th> Harga Satuan </th>
             <th> Jumlah Harga </th>
-            <th> Penermia </th>
+            <th> Penerima </th>
         </thead>
         <tbody>
             <?php foreach ($data as $item) : ?>

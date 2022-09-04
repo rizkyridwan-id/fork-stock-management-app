@@ -40,7 +40,7 @@ $total = 0
 
 <body>
     <h1>
-        <center>Laporan <br>Penerimaan Barang Paling Banyak Digunakan </center>
+        <center>Laporan <br> Barang Paling Banyak Digunakan </center>
     </h1>
     <h2> <center> Periode <?= $tanggal_dari ?> / <?= $tanggal_sampai ?> </center> </h2>
     <table class='table table-bordered' cellspacing="0" cellpadding="2" rules="rows">
@@ -68,7 +68,7 @@ $total = 0
         </tbody>
         <tfoot>
             <tr class="text-center">
-                <td colspan="3"> Total Barang Masuk </td>
+                <td colspan="3"> Total Barang  </td>
                 <td><?= number_format($total) ?></td>
                 <td><?= number_format($total_qty) ?></td>
             </tr>

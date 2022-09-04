@@ -23,7 +23,7 @@ class PenerimaanBarangController extends Controller
         // $databarang = ModelBarang::take(5)->get();
         $datasupplier = ModelSupplier::take(5)->get();
         return view('penerimaanbarang.index',compact('datasupplier'));
-        
+
     }
 
     /**
@@ -59,7 +59,7 @@ class PenerimaanBarangController extends Controller
             ]);
 
             $cekNoPenerimaan = ModelPenerimaanBarangController::max('no_penerimaan');
-         
+
             if($cekNoPenerimaan){
                 $urutan = (int) substr($cekNoPenerimaan, 3, 3);
                 $urutan++;
@@ -164,14 +164,14 @@ class PenerimaanBarangController extends Controller
     public function laporan()
     {
         return view('laporan.LaporanPenerimaanBarang');
-        
+
     }
 
     public function generatePDFPenerimaanBarang(Request $request)
     {
         $data['data'] = DB::table('tbl_penerimaan_barang as pb')
         ->join('tbl_barang as brg', 'pb.kode_barang', '=', 'brg.kode_barang')
-        ->select('pb.stock','pb.tgl_terima','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang','brg.harga_satuan')
+        ->select('pb.stock','pb.tgl_terima','pb.created_at','pb.username','pb.no_penerimaan','brg.kode_barang','brg.nama_barang','brg.harga_satuan')
         ->whereBetween('pb.tgl_terima',[ $request->get('tgl_dari'),  $request->get('tgl_sampai')])
         ->get();
         $data['tanggal_dari'] = $request->get('tgl_dari');
@@ -186,15 +186,15 @@ class PenerimaanBarangController extends Controller
             $datas = ModelPenerimaanBarangController::all();
             return DataTables::of($datas)
                 ->addIndexColumn() //memberikan penomoran
-                ->addColumn('action', function($row){  
+                ->addColumn('action', function($row){
                     $enc_id = \Crypt::encrypt($row->id);
                     $btn = '<a onclick="hapusPenerimaanBarang(this)" data-id="'.$row->id.'" data-kode_barang="'.$row->kode_barang.'"  data-stock="'.$row->stock.'"  class="hapus btn btn-sm btn-danger" > <i class="fas fa-trash"></i> Hapus</a>';
-                    return date('Y-m-d') === $row->tgl_terima ?  $btn : 'Tidak Bisa  Mengapus Penerimaan Barang Kemarin'; 
+                    return date('Y-m-d') === $row->tgl_terima ?  $btn : 'Tidak Bisa  Mengapus Penerimaan Barang Kemarin';
                 })
                 ->rawColumns(['action'])   //merender content column dalam bentuk html
                 ->escapeColumns()  //mencegah XSS Attack
                 ->toJson(); //merubah response dalam bentuk Json
-        } 
+        }
     }
 
 }

@@ -1,9 +1,9 @@
-## Running
 1. composer install 
-2. php artisan key:generate
-3. npm run install
-4. php artisan serve
-5. npm run watch
-6. php artisan 
-6. php artisan db:seed
-7. php artisan migrate:rollback //Untuk Mengosongkan Database
+2. cp .env.example .env
+3. php artisan key:generate
+4. npm install / yarn install
+5. setting .env untuk konek ke database
+6. php artisan migrate
+7. php artisan db:seed
+8. php artisan serve
+9. npm run watch
